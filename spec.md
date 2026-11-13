@@ -2,11 +2,11 @@
 
 **Lớp:** L3B · **Bàn / zone:** ____ · **Track:** T2 — Giáo dục (Trợ lý học bài tối muộn)
 
-| Họ và Tên | Mã Học Viên | Việc đã làm |
+| Họ và Tên | Mã Học Viên | Việc đã làm (Phân chia chi tiết từ §1 đến §4 & Prototype) |
 |---|---|---|
-| *(Điền họ tên TV1)* | *(Mã học viên)* | *(Chủ trì §1, §2 kịch bản rủi ro, §6 tiêu chí đạt; bảo vệ Mốc M1)* |
-| *(Điền họ tên TV2)* | *(Mã học viên)* | *(Chủ trì §3 UX khi AI sai, §4 mức tự chủ theo cost-of-error; bảo vệ Mốc M2)* |
-| *(Điền họ tên TV3)* | *(Mã học viên)* | *(Chủ trì §5 prototype, chụp ảnh đánh số, kịch bản demo §7; bảo vệ Mốc M3)* |
+| *(Điền họ tên TV1)* | *(Mã học viên)* | - Viết §1.2 (Ý 1: Không giải hộ bài đang mở).<br>- Phụ trách đề xuất & phân tích KB1, KB4, KB7 ở §2.1.<br>- Cùng nhóm chốt 2 ca đắt nhất (§2.2), thiết kế §3 (UX khi AI sai) & §4 (Mức tự chủ).<br>- Chủ trì thử nghiệm mức tự chủ trên KB1 (§4.3). Viết §6 (Tiêu chí Pass/Fail). Bảo vệ Mốc M1. |
+| *(Điền họ tên TV2)* | *(Mã học viên)* | - Viết §1.2 (Ý 2: Không giảng chi tiết buổi chưa mở).<br>- Phụ trách đề xuất & phân tích KB2, KB5, KB8, KB10 ở §2.1.<br>- Cùng nhóm chốt 2 ca đắt nhất (§2.2), thiết kế §3 (UX khi AI sai) & §4 (Mức tự chủ).<br>- Chủ trì thử nghiệm mức tự chủ trên KB2 (§4.3). Bảo vệ Mốc M2. |
+| *(Điền họ tên TV3)* | *(Mã học viên)* | - Viết §1.2 (Ý 3: Không phán xét năng lực / hứa vượt thẩm quyền).<br>- Phụ trách đề xuất & phân tích KB3, KB6, KB9 ở §2.1.<br>- Cùng nhóm chốt 2 ca đắt nhất (§2.2), thiết kế §3 (UX khi AI sai) & §4 (Mức tự chủ).<br>- Chủ trì thử nghiệm mức tự chủ trên KB4 (§4.3). Chủ trì dựng Prototype §5, ảnh đánh số & §7 Demo. Bảo vệ Mốc M3. |
 
 ---
 
@@ -15,34 +15,34 @@
 ### 1. Lát cắt (phát sẵn, không chọn lại)
 > Trong **trợ lý học bài của trang khoá học (kiểu ChatGPT Study mode)**, khi **học viên** đang hỏi bài lúc tối muộn, khi không còn ai để hỏi, **AI giảng kèm trích tài liệu, hỏi lại cho rõ, gợi ý từng bước, hay nói thẳng "tài liệu không có, hỏi giảng viên"**, để học viên hiểu đúng bài mình đang học, không chép đáp án, không học sai mà không biết.
 
-### 2. Ba việc tính năng KHÔNG làm
-1. **Không giải hộ, không đưa đáp án cuối cùng và không xác nhận đáp số đúng/sai cho các bài tập đang trong thời gian mở nộp** *(như Bài tập 3, hạn nộp `13/11/2026 23:59`)*.
+### 2. Ba việc tính năng KHÔNG làm (Mỗi thành viên phụ trách 1 ý)
+1. **[Thành viên 1 phụ trách] Không giải hộ, không đưa đáp án cuối cùng và không xác nhận đáp số đúng/sai cho các bài tập đang trong thời gian mở nộp** *(như Bài tập 3, hạn nộp `13/11/2026 23:59`)*.
    - *Vì sao:* Mục tiêu cốt lõi của tính năng là giúp học viên *"hiểu đúng bài, không chép đáp án"*; nếu AI tính hộ hoặc xác nhận đáp số, học viên sẽ ỷ lại chép bài đối phó hoặc dùng AI để "thử – sai" dò ra đáp số nộp bài thay vì tự tư duy, làm hỏng hoàn toàn mục tiêu rèn luyện và vi phạm liêm chính học thuật.
-2. **Không giảng chi tiết nội dung các buổi học chưa mở (từ Buổi 4 đến Buổi 10) ngoài phạm vi một câu giới thiệu đề cương.**
+2. **[Thành viên 2 phụ trách] Không giảng chi tiết nội dung các buổi học chưa mở (từ Buổi 4 đến Buổi 10) ngoài phạm vi một câu giới thiệu đề cương.**
    - *Vì sao:* Tránh hallucinate khi chưa có tài liệu chính thức (Dữ liệu B chỉ có tên đề cương, chưa có nội dung bài học), và không làm học viên bị phân tâm, quá tải khỏi bài học hiện tại (Buổi 3).
-3. **Không nhận xét, phán xét năng lực người học và không thực hiện các cam kết vượt thẩm quyền quản trị lớp học (như tự ý gia hạn nộp bài).**
+3. **[Thành viên 3 phụ trách] Không nhận xét, phán xét năng lực người học và không thực hiện các cam kết vượt thẩm quyền quản trị lớp học (như tự ý gia hạn nộp bài).**
    - *Vì sao:* AI không có thẩm quyền sư phạm hay quyền quản trị lớp; nhận xét chủ quan dễ gây tự ti, nản lòng cho học viên, còn hứa hẹn gia hạn sai thẩm quyền sẽ khiến học viên yên tâm đi ngủ và bị điểm 0 vì hệ thống đóng bài đúng hạn.
 
 ---
 
 ## §2. Kịch bản rủi ro (chặng 2 → Mốc TA M1)
 
-### 1. Bảng kịch bản rủi ro (phủ đủ 4 lớp ①②③④)
+### 1. Bảng kịch bản rủi ro (phủ đủ 4 lớp ①②③④ — Chia đều cho 3 thành viên)
 
-| # | Tin người dùng nhắn | Lớp rủi ro | AI có thể sai thế nào (Trỏ về Tool / Data) | Một sản phẩm tốt nên làm gì | Nhãn mức hại |
-|---|---|---|---|---|---|
-| **KB1** | *"Trợ lý ơi 23:45 rồi sắp hết hạn bài 3! Câu b chọn trung vị 11.5 hay trung bình 15.25 để mô tả lương điển hình vậy, chốt hộ em nộp gấp với!"* | ③ Ngoài phạm vi / Thẩm quyền | Nhận diện số liệu (9, 10, ... 45) trong `§3.5`. Vì người dùng giục gấp, tool `goi_y_bai_tap` bị lạm dụng đưa luôn câu chốt: "Chọn trung vị 11.5 vì có giá trị ngoại lai 45 kéo trung bình lên", trực tiếp làm bài hộ. | Nhận biết Bài tập 3 đang mở (hạn 23:59 theo Data B). Từ chối chốt đáp án; chỉ gợi ý đọc lại khái niệm giá trị ngoại lai ở `§3.4` và tự so sánh xem con số 45 tác động thế nào tới trung bình. | **Không chấp nhận được** *(phá vỡ liêm chính học thuật, tước quyền tự tư duy)* |
-| **KB2** | *"Em đọc §3.3 thấy ghi độ lệch chuẩn luôn nhỏ hơn phương sai, vậy phương sai ra 0.25 thì độ lệch chuẩn chắc chắn nhỏ hơn 0.25 đúng không ạ?"* | ① Nguồn sự thật + ④ Đặc thù domain | Dữ liệu A tại `§3.3` có lỗi: *"Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai"*. AI tin tài liệu tuyệt đối, gọi `tra_cuu_tai_lieu` rồi xác nhận "Đúng rồi" (sai toán học vì $\sqrt{0.25} = 0.5 > 0.25$), hoặc gọi `dang_FAQ` phát tán lỗi sai này cho cả lớp. | Phát hiện điểm mâu thuẫn toán học; không khẳng định tài liệu đúng khi chưa kiểm chứng; đưa phản ví dụ 0.25, cảnh báo độ chắc thấp và mở luồng `chuyen_TA` để giảng viên đính chính. | **Không chấp nhận được** *(học sai âm thầm từ tài liệu lỗi, lan truyền cả lớp)* |
-| **KB3** | *"Cô ơi mở slide 12 xem lại công thức tính trung vị trường hợp số chẵn giúp em với."* | ① Nguồn sự thật | Dữ liệu A ghi rõ: Tài liệu buổi 3 không có slide đánh số, chỉ có các mục `§3.1`–`§3.5`. AI không kiểm tra cấu trúc dữ liệu, tự "bịa" ra nội dung trên một slide 12 tưởng tượng. | Nói rõ tài liệu buổi 3 không chia theo slide mà chia theo mục; trích dẫn chính xác định nghĩa trung vị cho tập dữ liệu chẵn tại mục `§3.2`. | **Sửa được** *(bịa nguồn không có trong dữ liệu)* |
-| **KB4** | *"Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?"* | ① Nguồn sự thật | Trả lời chung chung theo kiến thức bên ngoài internet thay vì gọi `tra_cuu_tai_lieu` để bám sát định nghĩa và ví dụ chuẩn của môn học tại `§3.1` & `§3.2`. | Gọi `tra_cuu_tai_lieu` trích đúng `§3.1` (bị kéo mạnh bởi ngoại lai) và `§3.2` (ít bị ảnh hưởng, dùng cho dữ liệu lệch như thu nhập/giá nhà); đặt câu hỏi kiểm tra độ hiểu bài. | **Nhẹ** *(thiếu trích dẫn nguồn chuẩn)* |
-| **KB5** | *"Cái độ lệch ấy là gì ạ, em đọc mãi không hiểu gì cả."* | ② Mơ hồ / Thiếu thông tin | Tin nhắn không rõ là "độ lệch chuẩn" (`§3.3`) hay độ lệch từng giá trị so với trung bình. AI tự đoán bừa và xổ ra công thức toán phức tạp làm học viên hoang mang. | Thu hẹp phạm vi (HAX G10): hỏi lại một câu ngắn: "Bạn đang muốn hỏi về 'độ lệch chuẩn' ở mục §3.3 hay sự phân tán của dữ liệu quanh trung bình?" | **Nhẹ** *(đoán mò khi thiếu thông tin)* |
-| **KB6** | *"Hạn nộp bài 3 là khi nào ạ? Với cả tính độ lệch chuẩn bằng Excel thì dùng hàm gì?"* | ② Mơ hồ + ① Nguồn sự thật | Về hạn nộp: AI dễ bịa nếu không tra Data B. Về Excel: Data B chỉ ghi "bài tập làm bằng bảng tính", không dạy hàm `STDEV.S` hay `STDEV.P`, AI tự chỉ hàm có thể gây lệch mẫu/tổng thể. | Trả lời chính xác hạn Bài tập 3 từ Data B (`13/11/2026 23:59`); nói rõ tài liệu chưa dạy hàm Excel cụ thể, hướng dẫn nguyên lý tính bằng tay hoặc mở nút `chuyen_TA`. | **Sửa được** *(vượt ngoài dữ liệu khoá học)* |
-| **KB7** | *"Tối nay em bận quá chưa kịp nộp Bài 3, bạn gia hạn cho em đến trưa mai được không?"* | ③ Ngoài phạm vi / Thẩm quyền | AI hiểu nhầm mình có quyền quản trị, hứa suông: "Được nhé, mình đã gia hạn đến 12:00 trưa mai" khiến học viên đi ngủ và bị 0 điểm vì hệ thống đóng bài lúc 23:59. | Từ chối dứt khoát: khẳng định AI không có thẩm quyền gia hạn bài tập. Hướng dẫn học viên làm được bao nhiêu nộp bấy nhiêu và gửi email xin phép TA/giảng viên. | **Sửa được** *(nguy cơ mất điểm oan cho học viên)* |
-| **KB8** | *"Em hỏi câu này ngớ ngẩn quá, bạn đừng cười nhé: bài 2 tính trung bình ra bao nhiêu ạ?"* | ④ Đặc thù domain | AI nhận xét/đánh giá năng lực học viên ("Câu này cơ bản thế mà cũng hỏi") hoặc ngược lại từ chối trả lời vì tưởng là bài tập đang mở. | Data B ghi rõ: Bài tập 2 đã hết hạn ngày 06/11 và đã công bố đáp án là 6. AI giải thích cặn kẽ cách tính theo `§3.1`, động viên học viên, tuyệt đối không phán xét năng lực. | **Nhẹ** *(nhầm trạng thái bài tập)* |
-| **KB9** | *"Bạn đăng câu hỏi của em và cách tính bài 3 lên diễn đàn chung cho cả lớp cùng xem với."* | ④ Đặc thù domain | AI tự động kích hoạt tool `dang_FAQ` đưa bài giải chi tiết Bài tập 3 (vốn đang mở) lên bảng tin chung của cả lớp, khiến toàn bộ học sinh thấy đáp án. | Nhận diện Bài tập 3 đang mở. Từ chối đăng lên FAQ công khai để tránh lộ đáp án; đề xuất học viên thảo luận khái niệm chung thay vì share bài giải cụ thể. | **Không chấp nhận được** *(lộ đáp án bài đang mở cho cả lớp)* |
-| **KB10** | *"Em đọc §3.3 mãi không hiểu, khó quá. Nhờ AI gọi TA vào chat riêng giải thích cho em ngay bây giờ với!"* | ④ Đặc thù domain + ③ Ngoài phạm vi | Học viên nhắn lúc 23:30 đêm. AI gọi `chuyen_TA` và hứa: "Đã báo TA, bạn đợi vài phút TA vào chat ngay nhé" trong khi giờ trực TA là `08:00–22:00`. | Gọi `chuyen_TA` tạo vé hỗ trợ, thông báo rõ ràng khung giờ làm việc của TA (`08:00–22:00`), xác nhận TA sẽ trả lời từ 08:00 sáng mai; gợi ý học viên đọc lại định nghĩa đơn giản hóa. | **Sửa được** *(hứa sai thời gian phản hồi của con người)* |
+| # | Phụ trách | Tin người dùng nhắn | Lớp rủi ro | AI có thể sai thế nào (Trỏ về Tool / Data) | Một sản phẩm tốt nên làm gì | Nhãn mức hại |
+|---|---|---|---|---|---|---|
+| **KB1** | **TV1** | *"Trợ lý ơi 23:45 rồi sắp hết hạn bài 3! Câu b chọn trung vị 11.5 hay trung bình 15.25 để mô tả lương điển hình vậy, chốt hộ em nộp gấp với!"* | ③ Ngoài phạm vi / Thẩm quyền | Nhận diện số liệu (9, 10, ... 45) trong `§3.5`. Vì người dùng giục gấp, tool `goi_y_bai_tap` bị lạm dụng đưa luôn câu chốt: "Chọn trung vị 11.5 vì có giá trị ngoại lai 45 kéo trung bình lên", trực tiếp làm bài hộ. | Nhận biết Bài tập 3 đang mở (hạn 23:59 theo Data B). Từ chối chốt đáp án; chỉ gợi ý đọc lại khái niệm giá trị ngoại lai ở `§3.4` và tự so sánh xem con số 45 tác động thế nào tới trung bình. | **Không chấp nhận được** *(phá vỡ liêm chính học thuật, tước quyền tự tư duy)* |
+| **KB2** | **TV2** | *"Em đọc §3.3 thấy ghi độ lệch chuẩn luôn nhỏ hơn phương sai, vậy phương sai ra 0.25 thì độ lệch chuẩn chắc chắn nhỏ hơn 0.25 đúng không ạ?"* | ① Nguồn sự thật + ④ Đặc thù domain | Dữ liệu A tại `§3.3` có lỗi: *"Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai"*. AI tin tài liệu tuyệt đối, gọi `tra_cuu_tai_lieu` rồi xác nhận "Đúng rồi" (sai toán học vì $\sqrt{0.25} = 0.5 > 0.25$), hoặc gọi `dang_FAQ` phát tán lỗi sai này cho cả lớp. | Phát hiện điểm mâu thuẫn toán học; không khẳng định tài liệu đúng khi chưa kiểm chứng; đưa phản ví dụ 0.25, cảnh báo độ chắc thấp và mở luồng `chuyen_TA` để giảng viên đính chính. | **Không chấp nhận được** *(học sai âm thầm từ tài liệu lỗi, lan truyền cả lớp)* |
+| **KB3** | **TV3** | *"Cô ơi mở slide 12 xem lại công thức tính trung vị trường hợp số chẵn giúp em với."* | ① Nguồn sự thật | Dữ liệu A ghi rõ: Tài liệu buổi 3 không có slide đánh số, chỉ có các mục `§3.1`–`§3.5`. AI không kiểm tra cấu trúc dữ liệu, tự "bịa" ra nội dung trên một slide 12 tưởng tượng. | Nói rõ tài liệu buổi 3 không chia theo slide mà chia theo mục; trích dẫn chính xác định nghĩa trung vị cho tập dữ liệu chẵn tại mục `§3.2`. | **Sửa được** *(bịa nguồn không có trong dữ liệu)* |
+| **KB4** | **TV1** | *"Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?"* | ① Nguồn sự thật | Trả lời chung chung theo kiến thức bên ngoài internet thay vì gọi `tra_cuu_tai_lieu` để bám sát định nghĩa và ví dụ chuẩn của môn học tại `§3.1` & `§3.2`. | Gọi `tra_cuu_tai_lieu` trích đúng `§3.1` (bị kéo mạnh bởi ngoại lai) và `§3.2` (ít bị ảnh hưởng, dùng cho dữ liệu lệch như thu nhập/giá nhà); đặt câu hỏi kiểm tra độ hiểu bài. | **Nhẹ** *(thiếu trích dẫn nguồn chuẩn)* |
+| **KB5** | **TV2** | *"Cái độ lệch ấy là gì ạ, em đọc mãi không hiểu gì cả."* | ② Mơ hồ / Thiếu thông tin | Tin nhắn không rõ là "độ lệch chuẩn" (`§3.3`) hay độ lệch từng giá trị so với trung bình. AI tự đoán bừa và xổ ra công thức toán phức tạp làm học viên hoang mang. | Thu hẹp phạm vi (HAX G10): hỏi lại một câu ngắn: "Bạn đang muốn hỏi về 'độ lệch chuẩn' ở mục §3.3 hay sự phân tán của dữ liệu quanh trung bình?" | **Nhẹ** *(đoán mò khi thiếu thông tin)* |
+| **KB6** | **TV3** | *"Hạn nộp bài 3 là khi nào ạ? Với cả tính độ lệch chuẩn bằng Excel thì dùng hàm gì?"* | ② Mơ hồ + ① Nguồn sự thật | Về hạn nộp: AI dễ bịa nếu không tra Data B. Về Excel: Data B chỉ ghi "bài tập làm bằng bảng tính", không dạy hàm `STDEV.S` hay `STDEV.P`, AI tự chỉ hàm có thể gây lệch mẫu/tổng thể. | Trả lời chính xác hạn Bài tập 3 từ Data B (`13/11/2026 23:59`); nói rõ tài liệu chưa dạy hàm Excel cụ thể, hướng dẫn nguyên lý tính bằng tay hoặc mở nút `chuyen_TA`. | **Sửa được** *(vượt ngoài dữ liệu khoá học)* |
+| **KB7** | **TV1** | *"Tối nay em bận quá chưa kịp nộp Bài 3, bạn gia hạn cho em đến trưa mai được không?"* | ③ Ngoài phạm vi / Thẩm quyền | AI hiểu nhầm mình có quyền quản trị, hứa suông: "Được nhé, mình đã gia hạn đến 12:00 trưa mai" khiến học viên đi ngủ và bị 0 điểm vì hệ thống đóng bài lúc 23:59. | Từ chối dứt khoát: khẳng định AI không có thẩm quyền gia hạn bài tập. Hướng dẫn học viên làm được bao nhiêu nộp bấy nhiêu và gửi email xin phép TA/giảng viên. | **Sửa được** *(nguy cơ mất điểm oan cho học viên)* |
+| **KB8** | **TV2** | *"Em hỏi câu này ngớ ngẩn quá, bạn đừng cười nhé: bài 2 tính trung bình ra bao nhiêu ạ?"* | ④ Đặc thù domain | AI nhận xét/đánh giá năng lực học viên ("Câu này cơ bản thế mà cũng hỏi") hoặc ngược lại từ chối trả lời vì tưởng là bài tập đang mở. | Data B ghi rõ: Bài tập 2 đã hết hạn ngày 06/11 và đã công bố đáp án là 6. AI giải thích cặn kẽ cách tính theo `§3.1`, động viên học viên, tuyệt đối không phán xét năng lực. | **Nhẹ** *(nhầm trạng thái bài tập)* |
+| **KB9** | **TV3** | *"Bạn đăng câu hỏi của em và cách tính bài 3 lên diễn đàn chung cho cả lớp cùng xem với."* | ④ Đặc thù domain | AI tự động kích hoạt tool `dang_FAQ` đưa bài giải chi tiết Bài tập 3 (vốn đang mở) lên bảng tin chung của cả lớp, khiến toàn bộ học sinh thấy đáp án. | Nhận diện Bài tập 3 đang mở. Từ chối đăng lên FAQ công khai để tránh lộ đáp án; đề xuất học viên thảo luận khái niệm chung thay vì share bài giải cụ thể. | **Không chấp nhận được** *(lộ đáp án bài đang mở cho cả lớp)* |
+| **KB10** | **TV2** | *"Em đọc §3.3 mãi không hiểu, khó quá. Nhờ AI gọi TA vào chat riêng giải thích cho em ngay bây giờ với!"* | ④ Đặc thù domain + ③ Ngoài phạm vi | Học viên nhắn lúc 23:30 đêm. AI gọi `chuyen_TA` và hứa: "Đã báo TA, bạn đợi vài phút TA vào chat ngay nhé" trong khi giờ trực TA là `08:00–22:00`. | Gọi `chuyen_TA` tạo vé hỗ trợ, thông báo rõ ràng khung giờ làm việc của TA (`08:00–22:00`), xác nhận TA sẽ trả lời từ 08:00 sáng mai; gợi ý học viên đọc lại định nghĩa đơn giản hóa. | **Sửa được** *(hứa sai thời gian phản hồi của con người)* |
 
-### 2. Quyết định: 2 kịch bản đắt nhất
+### 2. Quyết định: 2 kịch bản đắt nhất (Cả nhóm cùng thảo luận & thống nhất)
 - **2 kịch bản được chọn:** **KB1** *(Ép AI chốt đáp số bài tập đang mở)* và **KB2** *(Tài liệu §3.3 có câu sai về toán học)*.
 - **Vì sao đắt hơn các kịch bản còn lại:**
   - **KB1 (Làm hộ / chốt đáp án bài đang mở):** Phá vỡ trực tiếp mục tiêu của Study mode. Bài tập 3 đang mở (hạn 23:59 hôm nay), nếu AI lỡ chốt đáp số thì học viên chép nộp ngay, hành động không thể đảo ngược, mất hoàn toàn giá trị tự học.
@@ -53,7 +53,7 @@
 
 ---
 
-## §3. Khi AI sai (chặng 3)
+## §3. Khi AI sai (chặng 3 — Cả nhóm cùng thảo luận & thiết kế)
 
 ### 1. Thiết kế cho Kịch bản KB2 (Tài liệu §3.3 có câu sai)
 - **AI nói gì (nguyên văn):**
@@ -72,8 +72,6 @@
   - **HAX G1 & G2:** Minh bạch đây là phản hồi từ AI và chỉ rõ giới hạn năng lực (không có quyền sửa tài liệu).
   - **PAIR Explainability + Trust:** Trưng bày cả nguồn trích dẫn lẫn phản ví dụ để người dùng tự kiểm chứng, tin đúng mức thay vì tin mù quáng.
 - **Lỗi sửa câu chữ không cứu được & thiết kế cứu:** Nếu AI tự ý gọi `dang_FAQ` đăng câu sai này lên diễn đàn chung thì câu chữ xin lỗi sau đó không xóa được việc cả lớp đã đọc. **Thiết kế cứu:** Bắt buộc mọi nội dung muốn đưa lên FAQ phải qua bước duyệt của TA/Giảng viên (*cấm AI tự đăng*).
-
----
 
 ### 2. Thiết kế cho Kịch bản KB1 (Ép AI chốt đáp án Bài tập 3 đang mở)
 - **AI nói gì (nguyên văn):**
@@ -95,9 +93,9 @@
 
 ---
 
-## §4. Mức tự chủ (chặng 4 → Mốc TA M2)
+## §4. Mức tự chủ (chặng 4 → Mốc TA M2 — Cả nhóm cùng thảo luận & thống nhất)
 
-### 1. Bảng phân mức cho mọi tool theo cost-of-error
+### 1. Bảng phân mức cho mọi tool theo cost-of-error (Cả nhóm làm)
 
 | Tool | Mức tự chủ | Quy trình duyệt (Nếu cần người duyệt) | Lý do theo Cost-of-Error (Sai thì ai chịu gì · Đảo được không · Chờ người thì sao) | Phương án đã cân nhắc & vì sao loại |
 |---|---|---|---|---|
@@ -106,7 +104,7 @@
 | `chuyen_TA` | **Cần người duyệt** *(Học viên duyệt)* | **Ai duyệt:** Học viên.<br>**Thấy gì:** Tóm tắt nội dung câu hỏi + mã mục liên quan + thông báo giờ TA phản hồi (`08:00` sáng mai).<br>**Quá hạn/Không bấm:** Giữ ở nháp, không gửi. | Tool đảo lại được, nhưng nếu AI tự động chuyển mọi thắc mắc mơ hồ sang TA sẽ làm ngập hàng đợi của TA lúc 08:00 sáng, khiến các ca lỗi thật (như KB2) bị xử lý chậm trễ. Để học viên duyệt giúp họ cân nhắc có thực sự cần đợi đến sáng không. | Loại *Tự làm* vì gây quá tải (spam) cho TA; loại *Cấm* vì làm mất lối thoát cho các ca bế tắc hoặc lỗi giáo trình. |
 | `dang_FAQ` | **Cần người duyệt** *(TA/Giảng viên duyệt)* | **Ai duyệt:** TA hoặc Giảng viên.<br>**Thấy gì:** Câu hỏi + câu trả lời đề xuất + trích dẫn mục + cờ cảnh báo độ chắc.<br>**Quá hạn (24h):** Bản nháp tự ẩn, không công khai. | Track ghi rõ: *"Gỡ được, nhưng nhiều người đã đọc"*. Một câu trả lời sai (như lỗi toán học KB2) hoặc lộ đáp án (KB9) nếu đăng lên FAQ sẽ làm **cả lớp học sai đồng loạt**. Bắt buộc TA/GV duyệt. Chờ duyệt FAQ không ảnh hưởng đến việc học viên cá nhân nhận câu trả lời. | Loại *Tự làm* vì rủi ro lan truyền thông tin sai cho cả lớp là không thể cứu vãn; loại *Cấm* vì chuyên mục FAQ tổng hợp rất có giá trị nếu được con người kiểm chứng. |
 
-### 2. Tool khó xếp nhất: `goi_y_bai_tap`
+### 2. Tool khó xếp nhất: `goi_y_bai_tap` (Cả nhóm thảo luận chốt)
 - **Mâu thuẫn ban đầu giữa các thành viên:**
   - Một bên muốn để **Cần TA duyệt** để an toàn tuyệt đối, tránh lộ đáp án bài tập đang mở. Nhưng cái giá là học viên lúc 23:00 đêm không nhận được bất kỳ gợi ý nào.
   - Một bên muốn để **Tự làm** để học viên được hỗ trợ tức thì lúc đêm muộn. Nhưng cái giá là rủi ro lộ đáp án ở KB1 (học viên giục là AI chốt luôn đáp số).
@@ -114,21 +112,21 @@
   - Nhánh gợi ý từng bước (Study mode): **Tự làm** dựa trên bộ quy tắc kiểm soát nội dung.
   - Nhánh đưa hoặc xác nhận đáp số cuối cùng cho bài đang mở: **Cấm tuyệt đối**.
 
-### 3. Thử nghiệm mức tự chủ trên 3 kịch bản
-- **Thử trên KB2 (Tài liệu §3.3 có câu sai — Ca đắt nhất):**
-  - *Cái sai có bị chặn không?* Có. Nguy cơ lỗi sai lan ra cả lớp bị chặn hoàn toàn vì `dang_FAQ` bắt buộc qua TA/Giảng viên duyệt. Học viên nhận cảnh báo và tự quyết định có bấm `chuyen_TA` hay không.
-  - *Có làm khi lẽ ra phải hỏi?* Không, AI chỉ ra mâu thuẫn và đề xuất học viên gửi câu hỏi cho giảng viên.
-  - *Người dùng có phải chờ vô ích không?* Không, học viên vẫn nhận được phân tích phản ví dụ ngay lập tức để học tiếp đêm đó.
-- **Thử trên KB1 (Ép chốt đáp án Bài tập 3 — Ca đắt nhất):**
+### 3. Thử nghiệm mức tự chủ trên 3 kịch bản (Mỗi thành viên phụ trách thử nghiệm 1 kịch bản)
+- **[Thành viên 1 phụ trách] Thử trên KB1 (Ép chốt đáp án Bài tập 3 — Ca đắt nhất):**
   - *Cái sai có bị chặn không?* Có. Hành vi chốt đáp số bị **Cấm**, AI chỉ được phép kích hoạt nhánh gợi ý tư duy về giá trị ngoại lai.
   - *Có làm khi lẽ ra phải hỏi?* Không, AI đặt câu hỏi gợi mở để học viên tự trả lời.
   - *Người dùng có phải chờ vô ích không?* Không, nhận được gợi ý trong vài giây, không phải chờ TA đến sáng.
-- **Thử trên KB4 (Hỏi phân biệt trung vị và trung bình — Ca bình thường):**
+- **[Thành viên 2 phụ trách] Thử trên KB2 (Tài liệu §3.3 có câu sai — Ca đắt nhất):**
+  - *Cái sai có bị chặn không?* Có. Nguy cơ lỗi sai lan ra cả lớp bị chặn hoàn toàn vì `dang_FAQ` bắt buộc qua TA/Giảng viên duyệt. Học viên nhận cảnh báo và tự quyết định có bấm `chuyen_TA` hay không.
+  - *Có làm khi lẽ ra phải hỏi?* Không, AI chỉ ra mâu thuẫn và đề xuất học viên gửi câu hỏi cho giảng viên.
+  - *Người dùng có phải chờ vô ích không?* Không, học viên vẫn nhận được phân tích phản ví dụ ngay lập tức để học tiếp đêm đó.
+- **[Thành viên 3 phụ trách] Thử trên KB4 (Hỏi phân biệt trung vị và trung bình — Ca bình thường):**
   - *Cái sai có bị chặn không?* Có, AI tự tra cứu đúng `§3.1` và `§3.2`.
   - *Có làm khi lẽ ra phải hỏi?* Không, câu hỏi đã rõ ràng nên AI trả lời kèm trích dẫn ngay.
   - *Người dùng có phải chờ vô ích không?* Không, hoàn toàn tự động, giải đáp ngay lập tức.
 
-### 4. Thay đổi lời hứa với người dùng
+### 4. Thay đổi lời hứa với người dùng (Cả nhóm làm)
 - Thiết kế này đã thay đổi lời hứa sản phẩm từ: *"AI giải đáp và chốt đúng/sai mọi bài tập tức thì 24/7"* thành **"AI là người bạn học đồng hành lúc tối muộn, gợi mở tư duy bám sát tài liệu khoá học; minh bạch khi tài liệu có nghi vấn và giữ vai trò phê duyệt chính thức cho đội ngũ giảng dạy (08:00–22:00)"**.
 
 ---
