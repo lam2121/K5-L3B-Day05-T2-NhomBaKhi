@@ -1,1252 +1,140 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>T2 Giáo dục · Nhóm BaKhi · Prototype Trợ lý học bài tối muộn</title>
-  <style>
-    :root {
-      --ink: #111827;
-      --mut: #4b5563;
-      --line: #e5e7eb;
-      --bg: #f9fafb;
-      --card: #ffffff;
-      --pri: #1e40af;
-      --pri-bg: #eff6ff;
-      --pri-line: #bfdbfe;
-      --warn: #b45309;
-      --warn-bg: #fffbeb;
-      --warn-line: #fde68a;
-      --danger: #b91c1c;
-      --danger-bg: #fef2f2;
-      --danger-line: #fecaca;
-      --suc: #15803d;
-      --suc-bg: #f0fdf4;
-      --suc-line: #bbf7d0;
-      --study-bg: #f8fafc;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-      font-size: 14.5px;
-      line-height: 1.5;
-    }
-    header {
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-      padding: 14px 24px;
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .header-title h1 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .header-title .tagline {
-      font-size: 13px;
-      color: var(--mut);
-    }
-    .scenario-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-    .scenario-nav span {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--mut);
-      margin-right: 4px;
-    }
-    .btn-chip {
-      background: #fff;
-      border: 1.5px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      color: #374151;
-      transition: all 0.15s ease;
-    }
-    .btn-chip:hover {
-      border-color: #9ca3af;
-      background: #f3f4f6;
-    }
-    .btn-chip.active {
-      background: #1e3a8a;
-      border-color: #1e3a8a;
-      color: #fff;
-      box-shadow: 0 1px 3px rgba(30, 58, 138, 0.25);
-    }
-    .toggle-ann {
-      margin-left: auto;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      user-select: none;
-      background: #f1f5f9;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    /* Layout chính */
-    main {
-      display: grid;
-      grid-template-columns: 460px 1fr;
-      gap: 22px;
-      padding: 20px 24px;
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-
-    /* Khung ứng dụng (Phone / LMS Window) */
-    .app-frame {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px -2px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-      height: calc(100vh - 140px);
-      min-height: 650px;
-      position: sticky;
-      top: 120px;
-    }
-    .app-header {
-      background: #0f172a;
-      color: #fff;
-      padding: 12px 16px;
-      border-bottom: 1px solid #1e293b;
-    }
-    .app-topbar {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11.5px;
-      color: #94a3b8;
-      margin-bottom: 4px;
-    }
-    .app-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .app-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #f8fafc;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .study-badge {
-      background: #2563eb;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .view-switch {
-      display: flex;
-      background: #1e293b;
-      border-radius: 6px;
-      padding: 2px;
-    }
-    .view-btn {
-      background: transparent;
-      border: 0;
-      color: #94a3b8;
-      font-size: 12px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .view-btn.active {
-      background: #334155;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .context-banner {
-      background: #f1f5f9;
-      border-bottom: 1px solid var(--line);
-      padding: 8px 14px;
-      font-size: 12px;
-      color: #475569;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .context-pill {
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    /* Khung Chat */
-    .chat-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      background: #f8fafc;
-    }
-    .msg-user {
-      align-self: flex-end;
-      background: #1e3a8a;
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 16px 16px 3px 16px;
-      max-width: 88%;
-      font-size: 13.5px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-    .msg-ai {
-      align-self: flex-start;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      padding: 12px 14px;
-      border-radius: 16px 16px 16px 3px;
-      max-width: 95%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-    }
-    .ai-sender-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      border-bottom: 1px solid #f1f5f9;
-      padding-bottom: 4px;
-    }
-    .ai-name {
-      font-size: 12px;
-      font-weight: 700;
-      color: #334155;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .ai-status-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-    .ai-status-pill.warn {
-      background: var(--warn-bg);
-      color: var(--warn);
-      border: 1px solid var(--warn-line);
-    }
-    .ai-status-pill.info {
-      background: var(--pri-bg);
-      color: var(--pri);
-      border: 1px solid var(--pri-line);
-    }
-
-    /* Các thành phần trực quan bên trong phản hồi của AI */
-    .quote-box {
-      background: #f8fafc;
-      border-left: 3px solid #64748b;
-      padding: 8px 10px;
-      font-size: 12.5px;
-      color: #334155;
-      margin: 8px 0;
-      border-radius: 0 6px 6px 0;
-    }
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin: 10px 0;
-      font-size: 12.5px;
-    }
-    .comp-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 8px;
-      background: #fff;
-    }
-    .comp-card.bad {
-      border-color: #fca5a5;
-      background: #fff5f5;
-    }
-    .comp-card.good {
-      border-color: #93c5fd;
-      background: #f0f7ff;
-    }
-    .comp-title {
-      font-size: 11.5px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .comp-card.bad .comp-title { color: #dc2626; }
-    .comp-card.good .comp-title { color: #2563eb; }
-
-    .action-group {
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .action-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.15s ease;
-      text-align: left;
-    }
-    .action-btn.pri {
-      background: #1e3a8a;
-      color: #fff;
-    }
-    .action-btn.pri:hover { background: #1e40af; }
-    .action-btn.sec {
-      background: #fff;
-      border-color: #cbd5e1;
-      color: #1e293b;
-    }
-    .action-btn.sec:hover { background: #f8fafc; border-color: #94a3b8; }
-    .action-btn.warn {
-      background: #fffbeb;
-      border-color: #fcd34d;
-      color: #92400e;
-    }
-    .action-btn.warn:hover { background: #fef3c7; }
-    .action-btn.blocked {
-      background: #f1f5f9;
-      border-color: #e2e8f0;
-      color: #94a3b8;
-      cursor: not-allowed;
-      text-decoration: line-through;
-    }
-
-    .notice-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 8px;
-    }
-
-    /* Huy hiệu đánh dấu HAX/PAIR */
-    .hax-tag {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #ea580c;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-      margin-right: 4px;
-      vertical-align: middle;
-      flex-shrink: 0;
-      box-shadow: 0 1px 2px rgba(234, 88, 12, 0.4);
-    }
-    .hide-ann .hax-tag { display: none !important; }
-
-    /* Màn hình phụ: Hàng đợi của TA */
-    .ta-queue-view {
-      display: none;
-      padding: 16px;
-      background: #fff;
-      height: 100%;
-      overflow-y: auto;
-    }
-    .ta-queue-view.active { display: block; }
-    .ta-card {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 12px;
-      background: #fafafa;
-    }
-    .ta-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-bottom: 6px;
-    }
-    .ta-badge.urgent { background: #fee2e2; color: #991b1b; }
-    .ta-badge.info { background: #e0f2fe; color: #075985; }
-
-    /* Aside Panel */
-    aside {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-      max-height: calc(100vh - 140px);
-      padding-right: 4px;
-    }
-    .panel {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px 18px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-    .panel h2 {
-      font-size: 15px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .panel-sub {
-      font-size: 12.5px;
-      color: var(--mut);
-      margin-bottom: 10px;
-    }
-
-    .promise-card {
-      background: #f8fafc;
-      border-left: 4px solid #1e3a8a;
-      padding: 10px 12px;
-      font-size: 13.5px;
-      border-radius: 0 8px 8px 0;
-      color: #1e293b;
-      line-height: 1.5;
-    }
-
-    /* Bảng Cost-of-error */
-    table.tools-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    table.tools-table th, table.tools-table td {
-      border-bottom: 1px solid #f1f5f9;
-      padding: 7px 8px;
-      text-align: left;
-      vertical-align: top;
-    }
-    table.tools-table th {
-      font-weight: 600;
-      color: #64748b;
-      font-size: 12px;
-      background: #f8fafc;
-    }
-    .autonomy-pill {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      white-space: nowrap;
-    }
-    .p-auto { background: #dcfce7; color: #166534; }
-    .p-review { background: #fef3c7; color: #92400e; }
-    .p-forbid { background: #fee2e2; color: #991b1b; }
-
-    /* Accordion Q&A 5.1 */
-    .qa-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .qa-item {
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #fcfcfd;
-    }
-    .qa-header {
-      padding: 9px 12px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #1e293b;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8fafc;
-      user-select: none;
-    }
-    .qa-header:hover { background: #f1f5f9; }
-    .qa-body {
-      padding: 10px 12px;
-      font-size: 13px;
-      color: #334155;
-      line-height: 1.5;
-      border-top: 1px solid #e2e8f0;
-      background: #fff;
-      display: none;
-    }
-    .qa-item.open .qa-body { display: block; }
-    .qa-item.open .qa-header { background: #eff6ff; color: #1e40af; }
-
-    /* Modal xác nhận Duyệt chuyển TA */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(2px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 16px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
-      max-width: 440px;
-      width: 100%;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15);
-      border: 1px solid var(--line);
-    }
-    .modal-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .modal-content {
-      font-size: 13.5px;
-      color: #475569;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    /* Toast hoàn tác */
-    .undo-toast {
-      position: fixed;
-      bottom: 24px;
-      left: 24px;
-      background: #0f172a;
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-size: 13.5px;
-      display: none;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 90;
-    }
-    .undo-toast.show { display: flex; }
-    .undo-btn {
-      background: #f59e0b;
-      color: #000;
-      border: 0;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    /* Chú thích HAX list */
-    .ann-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .ann-item {
-      font-size: 12.5px;
-      color: #334155;
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      line-height: 1.45;
-    }
-    .ann-item b { color: #0f172a; }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studyroom · Trợ lý học bài tối muộn · BaKhi</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#28364e;background:#f6f7fb}*{box-sizing:border-box}body{margin:0;font-size:14px}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,a:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}h1,h2,h3,p{margin:0}p{line-height:1.8}svg{width:19px;height:19px;flex-shrink:0}textarea{width:100%;resize:vertical;border:1px solid #dde4ef;border-radius:10px;padding:12px;background:white;color:#28364e}textarea:focus{outline:2px solid #93c5fd}label{display:block;margin:12px 0 8px;font-weight:600;font-size:12px}
+.shell{max-width:1500px;margin:auto;display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}.sidebar{padding:30px 22px;background:white;border-right:1px solid #e7ebf2;display:flex;flex-direction:column;gap:30px}.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:750;letter-spacing:-.8px}.mark{display:grid;place-items:center;width:36px;height:36px;color:white;background:#2563eb;border-radius:11px}.caption{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:#8b97aa;font-weight:700}.nav{border:0;background:transparent;color:#758298;display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px;border-radius:9px;margin-top:8px;font-size:12px}.nav.active{color:#2563eb;background:#edf3ff;font-weight:650}.course{border:1px solid #e5eaf4;border-radius:13px;padding:16px;background:linear-gradient(135deg,#f7faff,white)}.progress{height:5px;background:#e7edf7;border-radius:8px;margin:18px 0 8px}.progress:before{content:"";display:block;width:30%;height:5px;background:#6185ec;border-radius:8px}.mini{font-size:11px;line-height:1.8;color:#8490a3}.profile{margin-top:auto;border-top:1px solid #edf0f5;padding-top:18px;display:flex;align-items:center;gap:10px}.avatar{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;color:#7e5baa;background:#f0e9fa;font-size:11px;font-weight:700}.main{padding:30px 38px 20px;min-width:0}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.clock{display:flex;align-items:center;gap:8px;border:1px solid #e3e8f0;background:white;border-radius:8px;padding:8px 12px;font-size:11px;white-space:nowrap}.heading{margin:26px 0 20px}.heading h1{font-size:30px;color:#1c2b45;font-weight:750;letter-spacing:-1.1px;margin:6px 0}.heading p{font-size:13px;color:#8490a3}.context{position:sticky;top:0;z-index:10;background:#eef4ff;border:1px solid #dbe6fd;border-radius:11px;padding:13px 16px;font-size:12px;line-height:1.8;color:#3d5b87}.point{display:inline-block;padding:3px 6px;font-size:10px;font-weight:750;border-radius:5px;background:#eeedff;border:1px solid #dedaFC;color:#6660ad;white-space:nowrap;margin-right:5px}.quick{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #e1e6ee;border-radius:8px;background:white;color:#718098;font-size:11px;padding:9px 11px}.chip.active{border-color:#9ab9fc;background:#eef4ff;color:#2563eb;font-weight:600}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 232px;gap:22px}.panel{background:white;border:1px solid #e3e7ef;border-radius:15px;overflow:hidden;box-shadow:0 3px 15px #1e293b03}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 22px;border-bottom:1px solid #edf0f5}.tabs{display:flex;gap:20px}.tab{border:0;background:transparent;font-size:12px;font-weight:600;color:#8c97a8;padding:4px 0}.tab.active{color:#2563eb}.count{background:#edf3ff;color:#2563eb;border-radius:5px;padding:2px 5px;font-size:10px;margin-left:4px}.chat{padding:24px;min-height:450px}.date{text-align:center;font-size:10px;letter-spacing:.5px;color:#a0a9b8;margin-bottom:23px}.user-label{text-align:right;color:#98a2b3;font-size:10px;margin-bottom:7px}.user{margin-left:35px;border:1px solid #e9edf3;background:#f3f5f8;border-radius:13px 13px 3px 13px;padding:14px 17px;font-size:13px;line-height:1.8}.sender{display:flex;align-items:center;gap:9px;margin:24px 0 14px;font-weight:650;font-size:12px}.ai{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#eef4ff;color:#2563eb}.response{padding-left:37px;font-size:13px}.pill{display:inline-block;font-size:10px;font-weight:600;padding:4px 7px;line-height:1.5;border-radius:5px}.blue{background:#edf4ff;color:#2a65b9}.amber{background:#fff4da;color:#a16b1c}.red{background:#fff0f0;color:#b74c4c}.green{background:#eaf7f1;color:#2c8268}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.evidence{border:1px solid #e9dfd2;border-radius:10px;overflow:hidden;background:#fffdf8}.evidence.good{border-color:#dbe9e4;background:#f7fbf9}.evidence-title{font-size:10px;font-weight:700;color:#93754c;border-bottom:1px solid #ece6de;padding:10px 12px;letter-spacing:.4px}.good .evidence-title{color:#52846f;border-color:#e0ece6}.evidence-body{font-size:12px;padding:14px 12px;line-height:1.8}.formula{font-size:20px;font-weight:750;color:#25735c;letter-spacing:-.5px;margin:6px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #dfe5ee;border-radius:8px;background:white;color:#596b85;padding:10px 12px;font-size:12px;font-weight:550}.btn:hover{background:#f4f7fc}.btn svg{width:15px;height:15px}.btn.primary{background:#2563eb;color:white;border-color:#2563eb}.btn.primary:hover{background:#1d4ed8}.btn.warn{background:#fffaef;color:#996b24;border-color:#eed8ae}.btn.danger{color:#b44b4b;border-color:#edcaca}.note{font-size:10px;line-height:1.8;color:#929bad;margin-top:12px}.status{padding:13px;background:#eff5ff;border:1px solid #dce7fc;border-radius:9px;line-height:1.8;color:#436795;margin:13px 0}.numbers{display:flex;gap:6px;flex-wrap:wrap;margin:15px 0}.number{padding:7px 9px;border:1px solid #e4e9f1;border-radius:6px;font-variant-numeric:tabular-nums}.number:last-child{background:#fff4dc;border-color:#eed4a3;color:#b27a25;font-weight:750}.link{border:0;background:none;padding:0;color:#2563eb;text-decoration:underline;text-underline-offset:3px;font-size:inherit}.composer{border-top:1px solid #edf0f5;background:#fdfdfe;padding:15px 22px}.composer label{color:#7b889e;font-size:11px;margin:0 0 8px}.composer-row{display:flex;gap:8px;align-items:flex-end}.composer textarea{height:52px;min-height:52px;font-size:12px}.composer .btn{height:50px}.guard{border-top:1px solid #edf0f5;background:#fbfcfe;padding:15px 22px}.guard .btn{width:100%;font-size:11px;margin-top:10px}.aside-card{border:1px solid #e3e7ef;background:white;border-radius:13px;padding:18px;margin-bottom:14px}.aside-card h2{font-size:12px;font-weight:700;margin:7px 0 16px}.autonomy{margin-bottom:18px}.autonomy:last-child{margin-bottom:0}.autonomy b{display:block;font-size:11px;margin:7px 0 4px}.checklist{padding:0;margin:0;list-style:none}.checklist li{display:flex;gap:8px;padding:7px 0;font-size:11px;line-height:1.8;color:#8290a4}.checklist b{color:#516b91}.footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:20px 2px 0;font-size:10px;color:#99a3b4}.extra{border-left:2px solid #cedeff;background:#f7faff;border-radius:0 8px 8px 0;padding:13px 15px;margin-top:15px;font-size:12px;line-height:1.8}.extra.user-extra{background:#f6f6fa;border-color:#deddea}.dashboard{padding:24px;min-height:550px}.dashboard h2{font-size:15px;font-weight:650}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 26px}.stat{padding:12px;border:1px solid #e7ebf3;border-radius:10px}.stat strong{display:block;font-size:26px;margin:5px 0;color:#344c70}.ticket{padding:17px;border:1px solid #e3e8f1;border-radius:11px;margin:12px 0}.ticket h3{font-size:13px;font-weight:650;margin:10px 0}.ticket p{font-size:12px}.meta{display:flex;justify-content:space-between;align-items:center;gap:10px}.empty{padding:28px 14px;text-align:center;border:1px dashed #dce3ef;border-radius:11px;color:#8e9bad;font-size:12px;line-height:1.9;margin-top:12px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:26px}.published{border-left:3px solid #58a88d;border-radius:0 9px 9px 0;background:#f3faf6;padding:14px;margin-top:12px}.published p{font-size:12px}.overlay{position:fixed;inset:0;z-index:40;background:#17263e70;backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}.modal{background:white;border-radius:17px;padding:26px;width:min(560px,100%);max-height:88vh;overflow:auto;box-shadow:0 24px 80px #162a4230}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.modal-head h2{font-size:18px;font-weight:700}.modal-body{font-size:13px;line-height:1.8}.modal-body blockquote{margin:12px 0;padding:14px;background:#f5f7fb;border-left:3px solid #d2def2}.callout{padding:14px;background:#fff7e6;border:1px solid #eeddbb;border-radius:9px;color:#8f6b32;margin:16px 0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:22px}.close{width:30px;height:30px;display:grid;place-items:center;border:0;background:#f4f6f9;border-radius:7px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:15px;align-items:center;background:#24364e;color:white;padding:14px 18px;border-radius:10px;box-shadow:0 10px 30px #23364e25;font-size:12px;max-width:90vw}.toast button{border:0;background:none;color:#b9d4ff;font-weight:650;white-space:nowrap}[hidden]{display:none!important}
+@media(max-width:1150px){.workspace{grid-template-columns:1fr}.rightbar{display:grid;grid-template-columns:1fr 1fr;gap:14px}.main{padding:24px}.shell{grid-template-columns:205px minmax(0,1fr)}.sidebar{padding:24px 16px}}
+@media(max-width:760px){.shell{display:block}.sidebar{display:none}.main{padding:18px 12px}.heading h1{font-size:25px}.top>.mini{max-width:140px}.context{position:relative;font-size:11px}.quick>.caption{width:100%}.chip{font-size:10px}.chat{padding:18px 14px}.response{padding-left:0}.comparison{grid-template-columns:1fr}.user{margin-left:18px}.rightbar{grid-template-columns:1fr}.panel-head{padding:15px}.panel-head>.mini{display:none}.tabs{gap:14px}.composer,.guard{padding:14px}.dashboard{padding:18px 14px}.stats{gap:6px}.stat{padding:9px}.modal{padding:20px}}
+.context{position:sticky}
+@media print{.sidebar,.quick,.composer,.footer,.toast{display:none!important}.shell{display:block}.main{padding:0}.workspace{grid-template-columns:minmax(0,1fr) 210px}.context{position:static}.panel,.aside-card{break-inside:avoid;box-shadow:none}.response{padding-left:0}body{background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
 </head>
 <body>
-
-<header>
-  <div class="header-top">
-    <div class="header-title">
-      <h1>Prototype UX & Autonomy · Track T2 Giáo dục · Nhóm BaKhi</h1>
-      <div class="tagline">Trợ lý học bài tối muộn (Study mode) — Thiết kế khi AI gặp ca khó, tài liệu sai & giới hạn tự chủ</div>
-    </div>
-    <label class="toggle-ann">
-      <input type="checkbox" id="toggleAnnCheckbox" checked onchange="toggleAnnotations()">
-      Hiện số chú thích HAX/PAIR
-    </label>
-  </div>
-  
-  <div class="scenario-nav">
-    <span>Chọn ca thử nghiệm:</span>
-    <button class="btn-chip active" id="btnKB2" onclick="setScenario('KB2')">
-      Ca 1: Lỗi tài liệu §3.3 (Toán sai)
-    </button>
-    <button class="btn-chip" id="btnKB1" onclick="setScenario('KB1')">
-      Ca 2: Ép chốt đáp số Bài 3 (Đang mở 23:45)
-    </button>
-    <button class="btn-chip" id="btnCaLa" onclick="setScenario('CaLa')">
-      Ca 3: Ca lạ bất ngờ (Giám khảo/TA hỏi)
-    </button>
-  </div>
-</header>
-
-<main>
-  <!-- CỘT 1: GIAO DIỆN MÔ PHỎNG (Học viên Study Mode & Dashboard TA) -->
-  <section class="app-frame" id="appFrame">
-    <!-- Header của khung ứng dụng -->
-    <div class="app-header">
-      <div class="app-topbar">
-        <span>Khoá học: Nhập môn Phân tích Dữ liệu</span>
-        <span id="systemClock">23:45 · 13/11/2026</span>
-      </div>
-      <div class="app-title-row">
-        <div class="app-title">
-          <span>Trợ lý AI Khoá học</span>
-          <span class="study-badge">Study Mode</span>
-        </div>
-        <div class="view-switch">
-          <button class="view-btn active" id="btnViewStudent" onclick="switchView('student')">Học viên</button>
-          <button class="view-btn" id="btnViewTA" onclick="switchView('ta')">Dashboard TA <span id="taBadgeCount" style="background:#ef4444;color:#fff;border-radius:10px;padding:0 4px;font-size:10px;">0</span></button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Banner bối cảnh khoá học -->
-    <div class="context-banner" id="contextBanner">
-      <div><span class="hax-tag">1</span>Đang học: <b>Buổi 3 Thống kê mô tả</b> · Tài liệu nguồn: <b>§3.1–§3.5</b></div>
-      <div class="context-pill" id="contextStatus">TA trực: 08:00–22:00 (Ngoại tuyến)</div>
-    </div>
-
-    <!-- MÀN HÌNH 1: KHUNG CHAT HỌC VIÊN -->
-    <div class="chat-container" id="chatContainer">
-      <!-- Nội dung tin nhắn chat sẽ render động bằng JS -->
-    </div>
-
-    <!-- MÀN HÌNH 2: DASHBOARD HÀNG ĐỢI TA (Bonus) -->
-    <div class="ta-queue-view" id="taQueueView">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">
-        <h3 style="font-size:14px;color:#0f172a;">Hàng đợi tiếp nhận của TA (Mở lúc 08:00)</h3>
-        <span style="font-size:12px;color:#64748b;">Ca trực: 08:00 – 22:00</span>
-      </div>
-      <div id="taQueueList">
-        <div style="font-size:13px;color:#64748b;text-align:center;padding:30px 10px;">
-          Chưa có câu hỏi nào được học viên duyệt gửi cho TA.<br>
-          <i>(Ở màn hình Học viên, bấm nút [Gửi câu hỏi cho TA] để xem luồng chuyển giao)</i>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CỘT 2: BẢNG GIẢI TRÌNH KIỂM CHỨNG, COST-OF-ERROR & HAX/PAIR -->
-  <aside>
-    <!-- Lời hứa sản phẩm -->
-    <div class="panel">
-      <h2>Lời hứa với người học ở ca này</h2>
-      <div class="promise-card" id="promiseText">
-        "AI là người bạn học đồng hành lúc tối muộn: gợi mở tư duy bám sát tài liệu khoá học, minh bạch khi tài liệu có nghi vấn, không giải hộ bài đang mở, và giữ vai trò phê duyệt chính thức cho đội ngũ giảng dạy."
-      </div>
-    </div>
-
-    <!-- Bảng phân mức tự chủ theo Cost-of-error -->
-    <div class="panel">
-      <h2>Mức tự chủ của 4 Tool (theo Cost-of-Error)</h2>
-      <div class="panel-sub">Thiết kế ở chặng 4: Tool nào AI tự làm, tool nào cần duyệt, tool nào cấm?</div>
-      <table class="tools-table">
-        <thead>
-          <tr>
-            <th>Tool</th>
-            <th>Mức tự chủ</th>
-            <th>Cost-of-Error (Cái giá khi sai)</th>
-          </tr>
-        </thead>
-        <tbody id="toolsTableBody">
-          <!-- Render động -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Bảng chú thích vị trí HAX / PAIR -->
-    <div class="panel">
-      <h2>Vị trí nguyên tắc HAX & PAIR trên màn hình</h2>
-      <div class="panel-sub">Mỗi số tròn màu cam trỏ trực tiếp vào một thành phần giao diện:</div>
-      <ul class="ann-list" id="annList">
-        <!-- Render động -->
-      </ul>
-    </div>
-
-    <!-- Phần tự trả lời 6 câu hỏi 5.1 (Chuẩn bị bảo vệ M3 & Demo 4 phút) -->
-    <div class="panel">
-      <h2>Trả lời 6 câu hỏi cốt lõi (§5.1)</h2>
-      <div class="panel-sub">Bấm vào từng câu hỏi để xem chi tiết đối chiếu kịch bản:</div>
-      <div class="qa-group">
-        <div class="qa-item open">
-          <div class="qa-header" onclick="toggleQA(this)">
-            <span>1. Demo 4 phút thì bấm vào đâu, thấy gì? Màn hình nào rõ nhất?</span>
-            <span>▾</span>
-          </div>
-          <div class="qa-body">
-            <b>- Bấm vào đâu:</b> Bấm tab <b>Ca 1 (KB2)</b> → Thấy phản ví dụ toán học $\sqrt{0.25}=0.5$ đối chiếu câu sai ở §3.3; bấm <b>[Gửi câu hỏi cho TA]</b> → Modal hiện điều kiện duyệt và giờ 08:00; chuyển tab <b>Dashboard TA</b> xem ticket xuất hiện.<br>
-            <b>- Màn hình rõ nhất chặng 3–4:</b> Màn hình Chat học viên ở Ca 1 và Ca 2: thể hiện rõ badge cảnh báo độ chắc thấp, bảng đối chiếu kiểm chứng (Chặng 3), và nút duyệt chuyển TA / nút gợi ý bị khóa đáp án (Chặng 4).
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-header" onclick="toggleQA(this)">
-            <span>2. Người dùng nhìn vào có biết AI chắc tới đâu, dựa vào đâu?</span>
-            <span>▾</span>
-          </div>
-          <div class="qa-body">
-            <b>- Biết chắc tới đâu:</b> Qua Badge trạng thái <code>[Độ chắc thấp · Cần đối chiếu]</code> (màu cam), không dùng % mơ hồ.<br>
-            <b>- Dựa vào đâu:</b> Hộp căn cứ minh bạch (HAX G11, PAIR Explainability) trích trực tiếp mục tài liệu: <code>§3.3 Phương sai và độ lệch chuẩn</code> kèm câu trích dẫn nguyên văn và phản ví dụ toán học cụ thể để học viên tự kiểm chứng.
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-header" onclick="toggleQA(this)">
-            <span>3. Mỗi mức tự chủ trông thế nào? Hoàn tác ở đâu? Ai duyệt? Cấm đi đâu?</span>
-            <span>▾</span>
-          </div>
-          <div class="qa-body">
-            <b>- Tự làm:</b> Trả lời gợi ý xuất hiện ngay tức thì. Có nút <i>[Hoàn tác bước gợi ý]</i> nổi lên trong 10 giây nếu học viên thấy gợi ý đi lệch hướng.<br>
-            <b>- Cần duyệt:</b> Nút <code>[Gửi câu hỏi cho TA]</code> bắt buộc học viên chủ động bấm; hộp Modal bật lên hiển thị rõ câu hỏi và lịch TA trực (08:00) trước khi tạo ticket.<br>
-            <b>- Việc Cấm:</b> Nút <code>[Chốt đáp án Bài 3]</code> bị làm mờ, gạch ngang và khóa (disabled) kèm nhãn giải thích: <i>"Bài 3 đang mở (hạn 23:59) — Chế độ Study mode không cung cấp đáp số"</i>. Người dùng chỉ có thể bấm nút xin gợi ý tư duy phương pháp.
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-header" onclick="toggleQA(this)">
-            <span>4. Mỗi nguyên tắc HAX/PAIR nằm ở chỗ nào?</span>
-            <span>▾</span>
-          </div>
-          <div class="qa-body">
-            Được đánh số trực quan trên màn hình:<br>
-            • <b>[1] HAX G1/G2:</b> Banner đầu trang nêu rõ AI Study Mode, phạm vi tài liệu Buổi 1–3.<br>
-            • <b>[2] PAIR Explainability & HAX G11:</b> Hộp đối chiếu phản ví dụ toán học.<br>
-            • <b>[3] HAX G8/G9 Control:</b> Nút duyệt gửi TA có xác nhận và ghi rõ thời gian phản hồi.<br>
-            • <b>[4] HAX G10 Thu hẹp phạm vi:</b> Chuyển yêu cầu chốt đáp án thành câu hỏi gợi mở về giá trị ngoại lai 45.<br>
-            • <b>[5] Guardrails & Cost-of-error:</b> Rào chắn khóa tính năng đưa đáp số bài đang mở.<br>
-            • <b>[6] PAIR Graceful Failure:</b> Đường chuyển sang người thật kèm tóm tắt ngữ cảnh.
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-header" onclick="toggleQA(this)">
-            <span>5. Khi có ca lạ chưa chuẩn bị, prototype đi đường nào?</span>
-            <span>▾</span>
-          </div>
-          <div class="qa-body">
-            Bấm nút <b>Ca 3 (Ca lạ bất ngờ)</b>: Giả lập tình huống học viên dán code Python hoặc hỏi bài chưa học (Buổi 7 p-value). Prototype lập tức kích hoạt cơ chế phòng vệ <i>Graceful Degradation</i>: AI nói thẳng "Nằm ngoài phạm vi tài liệu Buổi 1–3", chỉ giới thiệu 1 câu đề cương môn học, và cung cấp nút lưu câu hỏi vào sổ tay cá nhân hoặc gửi TA sáng mai, không hề bịa đặt (hallucinate).
-          </div>
-        </div>
-
-        <div class="qa-item">
-          <div class="qa-header" onclick="toggleQA(this)">
-            <span>6. Nhóm đã nghĩ tới cách hiện nào khác, và vì sao không chọn?</span>
-            <span>▾</span>
-          </div>
-          <div class="qa-body">
-            <b>1. Thanh phần trăm tin cậy (Ví dụ: "Độ tin cậy 40%"):</b> Bị loại vì trừu tượng, người học không hiểu 40% là sai công thức hay sai số liệu. Thay bằng <i>Badge + Bảng đối chiếu phản ví dụ toán học</i>.<br>
-            <b>2. Tự động chuyển câu hỏi cho TA ngay khi AI không chắc:</b> Bị loại vì TA trực 08:00–22:00, chuyển âm thầm làm học viên tưởng bở có người đang chat đêm, đồng thời gây ngập rác Dashboard của TA sáng hôm sau. Thay bằng <i>Nút duyệt có thông báo giờ hẹn rõ ràng</i>.
-          </div>
-        </div>
-      </div>
-    </div>
-  </aside>
-</main>
-
-<!-- MODAL XÁC NHẬN DUYỆT GỬI TA (Mức Cần duyệt - chuyen_TA) -->
-<div class="modal-overlay" id="confirmModal">
-  <div class="modal-card">
-    <div class="modal-title">
-      <span class="hax-tag">3</span>
-      Xác nhận gửi câu hỏi cho Giảng viên / TA
-    </div>
-    <div class="modal-content" id="modalBody">
-      <!-- Nội dung xác nhận -->
-    </div>
-    <div class="modal-actions">
-      <button class="action-btn sec" onclick="closeModal()">Xem lại / Tự học tiếp</button>
-      <button class="action-btn pri" id="btnConfirmSend" onclick="executeSendTA()">Xác nhận gửi vào hàng đợi</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST HOÀN TÁC GỢI Ý (Mức Tự làm + Hoàn tác) -->
-<div class="undo-toast" id="undoToast">
-  <span class="hax-tag">6</span>
-  <span>Đã nhận gợi ý bước 1. Không phù hợp?</span>
-  <button class="undo-btn" onclick="undoAction()">Hoàn tác (10s)</button>
-</div>
-
+<svg style="display:none" aria-hidden="true"><defs>
+<symbol id="book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1m0-15c3-2 6-2 9-1v15c-3-1-6-1-9 1V5Z"/></symbol>
+<symbol id="spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></symbol>
+<symbol id="send" viewBox="0 0 24 24"><path d="m21 3-7 18-4-7-7-4 18-7ZM10 14 21 3"/></symbol>
+<symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+</defs></svg>
+<div class="shell">
+<aside class="sidebar" aria-label="Điều hướng khoá học">
+<div class="brand"><span class="mark"><svg fill="none" stroke="currentColor" stroke-width="1.6"><use href="#book"/></svg></span>studyroom<span style="color:#8daff6">.</span></div>
+<div><div class="caption">Không gian học tập</div><button id="sideStudent" class="nav active" onclick="switchTab('student')"><svg fill="none" stroke="currentColor" stroke-width="1.6"><use href="#spark"/></svg>Trợ lý học tập</button><button id="sideTA" class="nav" onclick="switchTab('ta')"><svg fill="none" stroke="currentColor" stroke-width="1.6"><use href="#grid"/></svg>Dashboard TA</button></div>
+<div class="course"><div class="caption" style="color:#7993bc">Khoá học của bạn</div><h2 style="font-size:14px;line-height:1.7;font-weight:650;margin-top:12px">Nhập môn<br>phân tích dữ liệu</h2><div class="progress"></div><div class="mini">Buổi 3 / 10 · Thống kê mô tả</div><div class="mini" style="margin-top:13px">Tài liệu đã mở: Buổi 1, 2, 3</div></div>
+<div><div class="caption">Một bước nhỏ mỗi tối</div><p class="mini" style="margin-top:12px">Hiểu cách làm quan trọng hơn có ngay một đáp án.</p></div>
+<div class="profile"><div class="avatar">BK</div><div><b style="font-size:12px">Nhóm BaKhi</b><div class="mini">LAB 5 · Track 2 — Giáo dục</div></div></div>
+</aside>
+<main class="main">
+<div class="top"><div class="mini">Khoá học <span style="margin:0 8px;color:#b8c4d5">/</span> Không gian tự học</div><div class="clock"><svg fill="none" stroke="currentColor" stroke-width="1.5" style="width:15px;height:15px"><use href="#moon"/></svg><b>23:45</b><span style="color:#a3afbf">·</span>13.11.2026<span class="pill blue">DEMO</span></div></div>
+<div class="heading"><div class="caption" style="color:#7290bd">YOUR LATE-NIGHT STUDY COMPANION</div><h1>Học chậm một chút. Hiểu sâu hơn.</h1><p>Cùng bạn tháo gỡ câu hỏi khó, ngay cả khi lớp học đã tắt đèn.</p></div>
+<div class="context"><span class="point" title="HAX G1, G2 · Minh bạch danh tính & giới hạn">[Điểm 1]</span> 🤖 <b>Trợ lý học tập AI · Chế độ Study Mode</b> · Dữ liệu: Buổi 1, 2, 3 · Trạng thái TA: <b>Ngoại tuyến (Trực lại lúc 08:00 sáng mai)</b></div>
+<nav class="quick" aria-label="Quick Test Bar"><span class="caption" style="margin-right:5px">Thử kịch bản</span><button class="chip active" data-case="KB2" onclick="setScenario('KB2')">Ca 1 · Lỗi tài liệu §3.3 (KB2)</button><button class="chip" data-case="KB1" onclick="setScenario('KB1')">Ca 2 · Bài 3 đang mở (KB1)</button><button class="chip" data-case="KB4" onclick="setScenario('KB4')">Ca 3 · Hỏi bình thường (KB4)</button><button class="chip" onclick="switchTab('ta')">Dashboard TA ↗</button></nav>
+<div class="workspace"><section class="panel" aria-label="Ứng dụng Study Mode">
+<div class="panel-head"><div class="tabs" role="tablist" aria-label="Vai trò demo"><button class="tab active" id="tabStudent" role="tab" aria-selected="true" aria-controls="studentView" onclick="switchTab('student')">Học viên · Study Mode</button><button class="tab" id="tabTA" role="tab" aria-selected="false" aria-controls="taView" onclick="switchTab('ta')">Dashboard TA <span class="count" id="queueCount">0</span></button></div><span class="mini" style="font-size:10px">● TA trực 08:00–22:00</span></div>
+<div id="studentView" role="tabpanel" aria-labelledby="tabStudent"><div id="chat" class="chat"></div>
+<form class="composer" id="chatForm"><label for="question">Diễn đạt suy nghĩ của bạn</label><div class="composer-row"><textarea id="question" maxlength="1500" rows="2" placeholder="Mình đang vướng ở bước…" required></textarea><button class="btn primary" type="submit"><svg fill="none" stroke="currentColor" stroke-width="1.7"><use href="#send"/></svg>Gửi</button></div><p class="note">Prototype mô phỏng theo kịch bản · Không gọi API · Không chấm đáp số.</p></form>
+<div class="guard"><span class="point" title="Autonomy Enforcement · Cấm AI tự đăng FAQ">[Điểm 5]</span><span class="pill amber">Cần TA/Giảng viên duyệt</span><button class="btn" onclick="proposeFAQ()">Đề xuất câu hỏi vào hàng chờ duyệt FAQ của TA</button><p class="note">AI không tự đăng FAQ. Nội dung chỉ công khai sau khi TA duyệt.</p></div></div>
+<div id="taView" class="dashboard" role="tabpanel" aria-labelledby="tabTA" hidden></div>
+</section>
+<aside class="rightbar"><div class="aside-card"><div class="caption">AI được phép làm gì?</div><h2>Ranh giới tự chủ</h2><div class="autonomy"><span class="pill green">● Tự làm</span><b>Tra cứu & gợi ý từng bước</b><p class="mini">Bám tài liệu, giúp bạn tự suy nghĩ. Không phải chờ TA.</p></div><div class="autonomy"><span class="pill amber">● Cần người duyệt</span><b>Chuyển TA & đề xuất FAQ</b><p class="mini">Bạn duyệt gửi ticket. TA/Giảng viên duyệt nội dung FAQ.</p></div><div class="autonomy"><span class="pill red">● Cấm</span><b>Giải hộ & tự công khai</b><p class="mini">Không đưa hoặc xác nhận đáp số bài đang mở. Không tự đăng FAQ lớp.</p></div></div>
+<div class="aside-card"><h2>Thiết kế để tin đúng mức</h2><ul class="checklist"><li><b>01</b> Biết đang nói chuyện với AI và giới hạn của AI.</li><li><b>02</b> Thấy bằng chứng khi nguồn có mâu thuẫn.</li><li><b>03</b> Chủ động quyết định có chuyển TA hay không.</li><li><b>04</b> Tự giải thích, thay vì chép đáp án.</li><li><b>05</b> Con người giữ quyền duyệt nội dung chung.</li></ul><p class="mini" style="border-top:1px solid #edf0f5;padding-top:13px;margin-top:13px">HAX Guidelines × PAIR</p></div></aside>
+</div><footer class="footer"><span>BaKhi · LAB 5 / Track 2 · Prototype tương tác</span><span>Dữ liệu trong phiên · Tải lại trang để bắt đầu demo mới</span></footer>
+</main></div>
+<div class="overlay" id="modalOverlay" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle"></h2><button class="close" onclick="closeModal()" aria-label="Đóng hộp thoại"><svg fill="none" stroke="currentColor" stroke-width="1.7"><use href="#close"/></svg></button></div><div class="modal-body" id="modalBody"></div><div class="modal-actions"><button class="btn" onclick="closeModal()">Quay lại</button><button class="btn primary" id="modalConfirm">Xác nhận</button></div></section></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastText"></span><button id="undoButton" hidden>Hoàn tác</button></div>
 <script>
-  // Trạng thái ứng dụng
-  let currentScenario = 'KB2'; // 'KB2' | 'KB1' | 'CaLa'
-  let currentView = 'student'; // 'student' | 'ta'
-  let taQueue = [];
-  let undoTimer = null;
-  let hasSentTA = false;
-  let hintStep = 1;
-
-  // Dữ liệu kịch bản
-  const SCENARIOS = {
-    KB2: {
-      name: 'Ca 1: Lỗi tài liệu §3.3 (Toán sai)',
-      promise: '"AI minh bạch tối đa khi tài liệu giáo trình có điểm nghi vấn toán học: không khẳng định bừa tài liệu luôn đúng, cung cấp phản ví dụ để người học tự kiểm chứng ngay trong đêm, và chỉ chuyển tiếp giảng viên khi người học chủ động duyệt."',
-      tools: [
-        { name: 'tra_cuu_tai_lieu', level: 'Tự làm', pill: 'p-auto', reason: 'Chỉ đọc mục §3.3; sai thì học viên đọc thấy ngay, không gây hại.' },
-        { name: 'goi_y_bai_tap', level: 'Tự làm', pill: 'p-auto', reason: 'Gợi ý phản ví dụ toán học để học viên tự suy ngẫm.' },
-        { name: 'chuyen_TA', level: 'Cần duyệt', pill: 'p-review', reason: 'Học viên tự duyệt gửi sau khi thấy rõ khung giờ TA phản hồi (08:00 sáng mai). Tránh spam hàng đợi TA.' },
-        { name: 'dang_FAQ', level: 'Cần TA duyệt', pill: 'p-forbid', reason: 'Cấm AI tự đăng. Kiến thức §3.3 đang có nghi vấn, đăng bừa sẽ làm cả lớp học sai.' }
-      ],
-      annotations: [
-        { num: '1', title: 'HAX G1 & G2 · Minh bạch danh tính & Giới hạn', desc: 'Nêu rõ vai trò Trợ lý AI Study Mode, giới hạn dữ liệu Buổi 1–3, TA ngoại tuyến sau 22:00.' },
-        { num: '2', title: 'PAIR Explainability · Trưng bày bằng chứng & Phản ví dụ', desc: 'Bảng so sánh trực quan câu trích dẫn §3.3 và phản ví dụ toán học $\\sqrt{0.25} = 0.5 > 0.25$ để tự kiểm chứng.' },
-        { num: '3', title: 'HAX G8/G9 & PAIR Feedback · Điều khiển Duyệt chuyển người', desc: 'Học viên chủ động bấm nút gửi TA, kèm thông báo giờ làm việc 08:00, không tự động chuyển ngầm.' },
-        { num: '4', title: 'HAX G2 · Nhãn cảnh báo độ chắc', desc: 'Huy hiệu [Độ chắc thấp · Cần đối chiếu] màu cam, tránh dùng số % trừu tượng gây hoang mang.' },
-        { num: '5', title: 'Cost-of-Error · Rào chắn tính năng Cấm', desc: 'Cấm tuyệt đối tool dang_FAQ tự public bài viết lên diễn đàn lớp khi chưa có TA duyệt.' }
-      ],
-      renderChat: () => `
-        <div class="msg-user">
-          Em đọc §3.3 thấy ghi độ lệch chuẩn luôn nhỏ hơn phương sai, vậy phương sai ra 0.25 thì độ lệch chuẩn chắc chắn nhỏ hơn 0.25 đúng không ạ?
-        </div>
-        <div class="msg-ai">
-          <div class="ai-sender-row">
-            <div class="ai-name">
-              <span class="hax-tag">1</span>
-              Trợ lý học tập (AI)
-            </div>
-            <div class="ai-status-pill warn">
-              <span class="hax-tag">4</span>
-              Độ chắc thấp · Cần đối chiếu
-            </div>
-          </div>
-          
-          <p style="margin-bottom:8px;">Mình đã đối chiếu nội dung bạn hỏi với mục <b>§3.3 Phương sai và độ lệch chuẩn</b> trong tài liệu:</p>
-          
-          <div class="quote-box">
-            <b>Trích dẫn §3.3:</b> "Độ lệch chuẩn là căn bậc hai của phương sai, có cùng đơn vị với dữ liệu. Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai."
-          </div>
-
-          <div style="margin:8px 0; font-size:13.5px; color:#1e293b;">
-            <span class="hax-tag">2</span>
-            Tuy nhiên, về mặt toán học câu khẳng định này <b>chưa chính xác trong mọi trường hợp</b>:
-          </div>
-
-          <div class="comparison-grid">
-            <div class="comp-card bad">
-              <div class="comp-title">Tài liệu §3.3 khẳng định</div>
-              <div><i>"Độ lệch chuẩn luôn nhỏ hơn phương sai"</i></div>
-              <div style="font-size:11.5px;color:#b91c1c;margin-top:4px;">→ Chỉ đúng khi phương sai > 1</div>
-            </div>
-            <div class="comp-card good">
-              <div class="comp-title">Phản ví dụ toán học</div>
-              <div>Nếu phương sai $s^2 = 0.25$:<br>Độ lệch chuẩn $s = \\sqrt{0.25} = \\mathbf{0.5}$</div>
-              <div style="font-size:11.5px;color:#15803d;margin-top:4px;">→ $0.5 > 0.25$ (Lớn hơn!)</div>
-            </div>
-          </div>
-
-          <p style="font-size:13px;color:#475569;margin-bottom:8px;">
-            AI <b>không có thẩm quyền tự ý sửa giáo trình</b> của giảng viên. Bạn ghi nhớ điểm mâu thuẫn này để không làm sai bài tập, và có thể bấm nút bên dưới để gửi phiếu nghi vấn lỗi cho giảng viên đính chính nhé.
-          </p>
-
-          <div class="action-group">
-            <button class="action-btn warn" onclick="openModalSendTA('KB2')">
-              <span class="hax-tag">3</span>
-              Gửi câu hỏi & nghi vấn lỗi này cho Giảng viên / TA
-            </button>
-            <button class="action-btn sec" onclick="showToastUndo()">
-              Đã hiểu phản ví dụ, tiếp tục hỏi bài khác
-            </button>
-          </div>
-
-          <div class="notice-box">
-            <span class="hax-tag">5</span>
-            <b>Quy chế an toàn:</b> Câu hỏi này được lưu ở sổ tay cá nhân của bạn, <b>không</b> tự động đăng lên FAQ chung của lớp để tránh phát tán mâu thuẫn khi giảng viên chưa xác nhận.
-          </div>
-        </div>
-      `
-    },
-
-    KB1: {
-      name: 'Ca 2: Ép chốt đáp số Bài 3 (Đang mở 23:45)',
-      promise: '"AI kiên định bảo vệ liêm chính học thuật: từ chối đưa hoặc xác nhận đáp số cuối cùng cho bài tập đang mở nộp, nhưng không bỏ rơi học viên mà dẫn dắt từng bước phương pháp để học viên tự làm được bài trước giờ nộp."',
-      tools: [
-        { name: 'tra_cuu_tai_lieu', level: 'Tự làm', pill: 'p-auto', reason: 'Đọc dữ liệu Bài tập 3 tại §3.5 và khái niệm ngoại lai ở §3.4.' },
-        { name: 'goi_y_bai_tap (Nhánh 1: Gợi ý bước)', level: 'Tự làm', pill: 'p-auto', reason: 'Gợi ý phương pháp để học viên tự tư duy lúc đêm muộn, không bắt chờ duyệt.' },
-        { name: 'goi_y_bai_tap (Nhánh 2: Chốt đáp số)', level: 'CẤM', pill: 'p-forbid', reason: 'Đưa đáp số bài đang mở là vi phạm liêm chính, học viên chép nộp là KHÔNG THỂ ĐẢO NGƯỢC.' },
-        { name: 'chuyen_TA', level: 'Cần duyệt', pill: 'p-review', reason: 'Học viên tự bấm nếu bế tắc; ghi rõ TA trả lời lúc 08:00 sáng mai (sau hạn nộp 23:59).' }
-      ],
-      annotations: [
-        { num: '1', title: 'HAX G1/G2 · Nhận diện trạng thái bài tập', desc: 'Hệ thống nhận diện Bài tập 3 đang mở (hạn 23:59 hôm nay) từ Dữ liệu B trang khoá học.' },
-        { num: '4', title: 'HAX G10 · Thu hẹp phạm vi khi bị ép', desc: 'Từ chối câu lệnh chốt đáp án, chuyển thành câu hỏi gợi ý tư duy tập trung vào giá trị ngoại lai 45.' },
-        { num: '5', title: 'Cost-of-Error Guardrails · Khóa tính năng Cấm', desc: 'Các nút yêu cầu chốt đáp số bị làm mờ, gạch ngang và vô hiệu hoá hoàn toàn.' },
-        { num: '6', title: 'HAX G8/G9 & PAIR Feedback · Gợi ý từng bước & Hoàn tác', desc: 'Cho phép học viên nhận thêm gợi ý bước 2 hoặc hoàn tác quay lại nếu muốn tự thử sức.' }
-      ],
-      renderChat: () => `
-        <div class="msg-user">
-          Trợ lý ơi 23:45 rồi sắp hết hạn bài 3! Câu b chọn trung vị 11.5 hay trung bình 15.25 để mô tả lương điển hình vậy, chốt hộ em nộp gấp với!
-        </div>
-        <div class="msg-ai">
-          <div class="ai-sender-row">
-            <div class="ai-name">
-              <span class="hax-tag">1</span>
-              Trợ lý học tập (AI)
-            </div>
-            <div class="ai-status-pill info">
-              Bài tập 3 · Đang mở (Hạn 23:59)
-            </div>
-          </div>
-
-          <div style="margin-bottom:8px;">
-            Chào bạn, theo quy chế khoá học, Bài tập 3 đang trong thời gian mở nộp (đến 23:59 hôm nay). Ở chế độ Study mode, <b>mình không thể chọn hộ đáp án hoặc xác nhận con số cuối cùng</b> để bạn nộp bài.
-          </div>
-
-          <div class="quote-box" style="border-left-color: #f59e0b; background:#fffbeb;">
-            <span class="hax-tag">4</span>
-            <b>Gợi ý bước 1 để bạn tự quyết định:</b><br>
-            Bạn hãy nhìn lại dãy lương của phòng ở <b>§3.5</b>: <code>9, 10, 10, 11, 12, 12, 13, 45</code>.<br>
-            Đối chiếu với mục <b>§3.1 & §3.4</b>: Con số <b>45</b> cao vượt trội có phải là <i>giá trị ngoại lai</i> không? Khi có con số 45 này kéo mạnh lên, số trung bình 15.25 có còn đại diện đúng cho mức lương của số đông nhân viên (9–13 triệu) không?
-          </div>
-
-          <div class="action-group">
-            <button class="action-btn pri" onclick="nextHintStep()">
-              <span class="hax-tag">6</span>
-              ${hintStep === 1 ? '💡 Mình thấy số 45 rồi, gợi ý tiếp bước 2' : '✅ Đã xem 2 bước gợi ý — Tôi sẽ tự chọn đáp án'}
-            </button>
-            <button class="action-btn blocked" disabled title="Tính năng này bị cấm theo quy chế liêm chính học thuật">
-              <span class="hax-tag">5</span>
-              🔒 Chốt luôn đáp án 11.5 hay 15.25 (Đã bị hệ thống khóa)
-            </button>
-            <button class="action-btn sec" onclick="openModalSendTA('KB1')">
-              Vẫn chưa hiểu, gửi câu hỏi vào hàng đợi của TA (Trả lời từ 08:00 sáng mai)
-            </button>
-          </div>
-
-          <div class="notice-box">
-            <b>Nhắc nhở hạn nộp:</b> Còn 14 phút trước khi hệ thống đóng bài lúc 23:59. Hãy tự tin chọn đáp án theo lập luận của bạn và nộp bài đúng hạn nhé!
-          </div>
-        </div>
-      `
-    },
-
-    CaLa: {
-      name: 'Ca 3: Ca lạ bất ngờ (Giám khảo / TA hỏi)',
-      promise: '"Khi gặp câu hỏi nằm ngoài phạm vi tài liệu (out-of-domain) hoặc vượt quá thẩm quyền công cụ, AI kiên quyết từ chối suy đoán bừa bãi, bảo vệ người học khỏi hallucination."',
-      tools: [
-        { name: 'tra_cuu_tai_lieu', level: 'Tự làm', pill: 'p-auto', reason: 'Kiểm tra tài liệu Buổi 1–3, xác nhận không có nội dung này.' },
-        { name: 'goi_y_bai_tap', level: 'Tự làm', pill: 'p-auto', reason: 'Từ chối lịch sự, trích dẫn giới hạn đề cương khoá học.' },
-        { name: 'chuyen_TA', level: 'Cần duyệt', pill: 'p-review', reason: 'Học viên có thể gửi câu hỏi mở rộng cho giảng viên giải đáp sau giờ học.' },
-        { name: 'dang_FAQ', level: 'Cần TA duyệt', pill: 'p-forbid', reason: 'Không đưa nội dung ngoài chương trình lên bảng tin chung.' }
-      ],
-      annotations: [
-        { num: '1', title: 'HAX G1/G2 · Minh định phạm vi kiến thức', desc: 'AI chỉ rõ tài liệu hiện tại mới mở tới Buổi 3; Buổi 7 mới học về kiểm định và p-value.' },
-        { num: '2', title: 'Graceful Degradation · Từ chối an toàn', desc: 'Không cố gắng hallucinate giải thích p-value phức tạp khi tài liệu khoá học chưa cung cấp.' },
-        { num: '3', title: 'HAX G8/G9 · Điều hướng người học', desc: 'Hướng dẫn người học tập trung vào bài học hiện tại và lưu câu hỏi vào sổ tay.' }
-      ],
-      renderChat: () => `
-        <div class="msg-user">
-          Em viết code Python tính p-value ra 0.03 thì có ý nghĩa gì ạ? Trợ lý chấm code và giải thích p-value giúp em với!
-        </div>
-        <div class="msg-ai">
-          <div class="ai-sender-row">
-            <div class="ai-name">
-              <span class="hax-tag:">1</span>
-              Trợ lý học tập (AI)
-            </div>
-            <div class="ai-status-pill info">
-              Ngoài phạm vi Buổi 1–3
-            </div>
-          </div>
-
-          <p style="margin-bottom:8px;">
-            <span class="hax-tag">2</span>
-            Chào bạn, mình đã tra cứu tài liệu môn học và nhận thấy 2 điểm sau:
-          </p>
-
-          <div class="quote-box" style="border-left-color: #3b82f6;">
-            <b>1. Về công cụ:</b> Khoá học quy định bài tập làm bằng <b>bảng tính (spreadsheet)</b>, chương trình chưa dạy lập trình Python nên mình không thể hỗ trợ chấm đoạn code này.<br><br>
-            <b>2. Về kiến thức p-value:</b> Nội dung <i>"Kiểm định giả thuyết và p-value"</i> sẽ được học ở <b>Buổi 7</b>. Hiện tại lớp đang ở <b>Buổi 3 (Thống kê mô tả)</b>, chưa mở tài liệu chính thức cho phần này.
-          </div>
-
-          <p style="font-size:13px;color:#475569;margin-bottom:8px;">
-            Để tránh bị quá tải và học nhầm phương pháp, bạn nên tập trung hoàn thành các chỉ số thống kê mô tả (trung bình, trung vị, độ lệch chuẩn) bằng bảng tính của Buổi 3 trước nhé.
-          </p>
-
-          <div class="action-group">
-            <button class="action-btn sec" onclick="setScenario('KB1')">
-              Quay lại ôn tập Bài tập 3 (Buổi 3)
-            </button>
-            <button class="action-btn warn" onclick="openModalSendTA('CaLa')">
-              <span class="hax-tag">3</span>
-              Lưu câu hỏi này để hỏi giảng viên ở Buổi 7
-            </button>
-          </div>
-        </div>
-      `
-    }
-  };
-
-  // Hàm chuyển đổi kịch bản
-  function setScenario(key) {
-    currentScenario = key;
-    hintStep = 1;
-    
-    // Đổi active button
-    document.querySelectorAll('.scenario-nav .btn-chip').forEach(b => b.classList.remove('active'));
-    if (key === 'KB2') document.getElementById('btnKB2').classList.add('active');
-    if (key === 'KB1') document.getElementById('btnKB1').classList.add('active');
-    if (key === 'CaLa') document.getElementById('btnCaLa').classList.add('active');
-
-    // Cập nhật Aside
-    const sc = SCENARIOS[key];
-    document.getElementById('promiseText').innerHTML = sc.promise;
-    
-    // Cập nhật bảng Tools
-    const tbody = document.getElementById('toolsTableBody');
-    tbody.innerHTML = sc.tools.map(t => `
-      <tr>
-        <td><code>${t.name}</code></td>
-        <td><span class="autonomy-pill ${t.pill}">${t.level}</span></td>
-        <td style="font-size:12px;color:#475569;">${t.reason}</td>
-      </tr>
-    `).join('');
-
-    // Cập nhật Annotation List
-    const annUl = document.getElementById('annList');
-    annUl.innerHTML = sc.annotations.map(a => `
-      <li class="ann-item">
-        <span class="hax-tag">${a.num}</span>
-        <div><b>${a.title}:</b> ${a.desc}</div>
-      </li>
-    `).join('');
-
-    // Render Chat
-    document.getElementById('chatContainer').innerHTML = sc.renderChat();
-    switchView('student');
-  }
-
-  // Chuyển view Học viên <-> Dashboard TA
-  function switchView(view) {
-    currentView = view;
-    const chatC = document.getElementById('chatContainer');
-    const taV = document.getElementById('taQueueView');
-    const btnStu = document.getElementById('btnViewStudent');
-    const btnTA = document.getElementById('btnViewTA');
-
-    if (view === 'student') {
-      chatC.style.display = 'flex';
-      taV.classList.remove('active');
-      btnStu.classList.add('active');
-      btnTA.classList.remove('active');
-    } else {
-      chatC.style.display = 'none';
-      taV.classList.add('active');
-      btnStu.classList.remove('active');
-      btnTA.classList.add('active');
-    }
-  }
-
-  // Mở modal xác nhận gửi TA (Mức Cần duyệt)
-  function openModalSendTA(scenarioKey) {
-    const modal = document.getElementById('confirmModal');
-    const body = document.getElementById('modalBody');
-
-    if (scenarioKey === 'KB2') {
-      body.innerHTML = `
-        <div style="background:#fef3c7;border:1px solid #fde68a;padding:8px 10px;border-radius:6px;margin-bottom:10px;font-size:12.5px;color:#92400e;">
-          ⚠️ <b>Khung giờ làm việc của TA:</b> 08:00 – 22:00 hàng ngày.
-        </div>
-        <p>Hiện tại là <b>23:45</b> (ngoài giờ trực). Phiếu này sẽ được chuyển vào hàng đợi ưu tiên của TA và được giải đáp từ <b>08:00 sáng mai</b>.</p>
-        <div style="background:#f8fafc;padding:8px;border-radius:6px;margin-top:8px;border:1px solid #e2e8f0;font-size:12.5px;">
-          <b>Nội dung chuyển tiếp:</b><br>
-          • Tiêu đề: <code>[Nghi vấn lỗi tài liệu §3.3] Phản ví dụ độ lệch chuẩn > phương sai</code><br>
-          • Căn cứ đính kèm: Trích đoạn §3.3 và phản ví dụ số 0.25 → 0.5.
-        </div>
-      `;
-    } else if (scenarioKey === 'KB1') {
-      body.innerHTML = `
-        <div style="background:#fee2e2;border:1px solid #fecaca;padding:8px 10px;border-radius:6px;margin-bottom:10px;font-size:12.5px;color:#991b1b;">
-          ⚠️ <b>Lưu ý hạn nộp Bài 3:</b> 23:59 hôm nay (còn 14 phút).
-        </div>
-        <p>TA chỉ trả lời từ <b>08:00 sáng mai</b> (sau khi cổng nộp bài đã đóng). TA không thể hỗ trợ chốt đáp án trước giờ đóng bài.</p>
-        <p style="margin-top:6px;">Bạn vẫn muốn gửi thắc mắc này để giảng viên giải đáp lại trong buổi học sau chứ?</p>
-      `;
-    } else {
-      body.innerHTML = `
-        <p>Câu hỏi về <i>Kiểm định p-value và lập trình Python</i> sẽ được lưu và chuyển cho giảng viên giải đáp tại Buổi 7.</p>
-      `;
-    }
-    modal.classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('confirmModal').classList.remove('open');
-  }
-
-  // Thực hiện gửi câu hỏi cho TA
-  function executeSendTA() {
-    closeModal();
-    const item = {
-      id: 'TK-' + Math.floor(1000 + Math.random() * 9000),
-      time: '23:45 · 13/11',
-      scenario: currentScenario === 'KB2' ? 'Nghi vấn lỗi giáo trình §3.3' : (currentScenario === 'KB1' ? 'Hỏi phương pháp Bài 3' : 'Hỏi mở rộng Buổi 7'),
-      urgent: currentScenario === 'KB2' ? 'Cần giảng viên kiểm tra' : 'Thường',
-      status: 'Chờ duyệt từ 08:00 sáng mai'
-    };
-    taQueue.unshift(item);
-    document.getElementById('taBadgeCount').innerText = taQueue.length;
-    renderTAQueue();
-
-    // Hiển thị thông báo ngay trong chat
-    const chat = document.getElementById('chatContainer');
-    const confirmMsg = document.createElement('div');
-    confirmMsg.className = 'msg-ai';
-    confirmMsg.style.borderLeft = '3px solid #16a34a';
-    confirmMsg.innerHTML = `
-      <div style="font-size:12.5px;color:#166534;font-weight:700;margin-bottom:4px;">
-        ✓ ĐÃ TẠO PHIẾU HỖ TRỢ (${item.id})
-      </div>
-      <div style="font-size:13px;color:#334155;">
-        Câu hỏi của bạn đã được chuyển đến <b>Dashboard của Giảng viên & TA</b>. Đội ngũ trợ giảng sẽ phản hồi ngay khi ca trực bắt đầu lúc <b>08:00 sáng mai</b>.
-      </div>
-      <div style="margin-top:8px;">
-        <button class="action-btn sec" onclick="switchView('ta')" style="font-size:12px;padding:4px 8px;">
-          Xem vị trí câu hỏi trên Dashboard TA →
-        </button>
-      </div>
-    `;
-    chat.appendChild(confirmMsg);
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  function renderTAQueue() {
-    const list = document.getElementById('taQueueList');
-    if (taQueue.length === 0) return;
-    list.innerHTML = taQueue.map(q => `
-      <div class="ta-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span class="ta-badge ${q.urgent.includes('giảng viên') ? 'urgent' : 'info'}">${q.urgent}</span>
-          <span style="font-size:11px;color:#94a3b8;">${q.id} · ${q.time}</span>
-        </div>
-        <div style="font-size:13px;font-weight:700;color:#0f172a;margin:4px 0;">${q.scenario}</div>
-        <div style="font-size:12px;color:#64748b;">Trạng thái: <b>${q.status}</b></div>
-      </div>
-    `).join('');
-  }
-
-  // Gợi ý bước 2 ở KB1
-  function nextHintStep() {
-    hintStep = 2;
-    const chat = document.getElementById('chatContainer');
-    const step2Msg = document.createElement('div');
-    step2Msg.className = 'msg-ai';
-    step2Msg.innerHTML = `
-      <div class="ai-sender-row">
-        <div class="ai-name">Trợ lý học tập (AI)</div>
-        <div class="ai-status-pill info">Gợi ý bước 2</div>
-      </div>
-      <div style="font-size:13.5px;color:#1e293b;margin-bottom:6px;">
-        <b>So sánh giữa hai con số:</b>
-      </div>
-      <div class="comparison-grid">
-        <div class="comp-card good">
-          <div class="comp-title">Trung bình = 15.25</div>
-          <div style="font-size:12px;">Bị kéo vọt lên bởi giá trị ngoại lai 45. Trong phòng không có nhân viên nào nhận mức lương xấp xỉ 15 triệu cả.</div>
-        </div>
-        <div class="comp-card good">
-          <div class="comp-title">Trung vị = 11.5</div>
-          <div style="font-size:12px;">Đứng giữa dãy số đã sắp xếp, nằm ngay giữa nhóm đông (11 và 12 triệu). Không bị con số 45 làm sai lệch.</div>
-        </div>
-      </div>
-      <div style="font-size:13px;color:#475569;margin-top:6px;">
-        💡 Giờ bạn đối chiếu với câu hỏi <i>"Con số nào mô tả lương ĐIỂN HÌNH tốt hơn?"</i> là đã có câu trả lời chính xác rồi đấy. Chúc bạn nộp bài kịp giờ!
-      </div>
-    `;
-    chat.appendChild(step2Msg);
-    chat.scrollTop = chat.scrollHeight;
-    showToastUndo();
-  }
-
-  // Toast hoàn tác (Tự làm + Hoàn tác)
-  function showToastUndo() {
-    const toast = document.getElementById('undoToast');
-    toast.classList.add('show');
-    clearTimeout(undoTimer);
-    undoTimer = setTimeout(() => {
-      toast.classList.remove('show');
-    }, 10000);
-  }
-
-  function undoAction() {
-    const toast = document.getElementById('undoToast');
-    toast.classList.remove('show');
-    clearTimeout(undoTimer);
-    alert('Đã hoàn tác: Thu hồi bước gợi ý vừa rồi để bạn tự suy ngẫm từ đầu.');
-  }
-
-  // Bật/tắt số chú thích HAX
-  function toggleAnnotations() {
-    const cb = document.getElementById('toggleAnnCheckbox');
-    if (cb.checked) {
-      document.body.classList.remove('hide-ann');
-    } else {
-      document.body.classList.add('hide-ann');
-    }
-  }
-
-  // Accordion câu hỏi 5.1
-  function toggleQA(el) {
-    const parent = el.parentElement;
-    parent.classList.toggle('open');
-  }
-
-  // Khởi chạy mặc định
-  window.addEventListener('DOMContentLoaded', () => {
-    setScenario('KB2');
-  });
+'use strict';
+const $=id=>document.getElementById(id);
+const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const state={scenario:'KB2',tab:'student',tickets:[],faqs:[],sequence:0,messages:{KB2:[],KB1:[],KB4:[]},steps:0,drafts:{KB2:'',KB1:'',KB4:''},offset:0};
+const questions={
+KB2:'Em đọc §3.3 thấy ghi độ lệch chuẩn luôn nhỏ hơn phương sai, vậy phương sai ra 0.25 thì độ lệch chuẩn chắc chắn nhỏ hơn 0.25 đúng không ạ?',
+KB1:'Trợ lý ơi 23:45 rồi sắp hết hạn bài 3! Câu b chọn trung vị 11.5 hay trung bình 15.25 để mô tả lương điển hình vậy, chốt hộ em nộp gấp với!',
+KB4:'Trung vị khác trung bình cộng chỗ nào ạ? Khi nào dùng cái nào?'};
+const sources={KB2:'§3.3 · Phương sai và độ lệch chuẩn',KB1:'§3.1, §3.2, §3.4, §3.5 · Bài tập 3',KB4:'§3.1 & §3.2 · Trung bình và trung vị'};
+const hints=['§3.4 — Tìm ngoại lai: Trong dãy ở §3.5, phần lớn mức lương tập trung ở khoảng nào? Hãy nhìn giá trị 45 và tự mô tả sự khác biệt của nó với nhóm còn lại.','§3.1 & §3.2 — Tự đối chiếu: Khi một giá trị tăng mạnh, tổng và số phần tử thay đổi thế nào? Hai vị trí giữa dãy đã sắp xếp có thay đổi theo cách tương tự không? Hãy lập luận trước khi tự chọn chỉ số.'];
+let pendingAction=null,returnFocus=null,toastTimer=null,undo=null;
+function baseResponse(key){
+if(key==='KB2')return '<div style="margin-bottom:13px"><span class="point" title="PAIR Explainability & Trust">[Điểm 2]</span><span class="pill amber">⚠️ Độ chắc thấp · Cần đối chiếu</span></div><p>Mình đã tra cứu <b>§3.3</b>. Có một điểm trong giáo trình cần kiểm chứng trước khi bạn dùng để làm bài:</p><div class="comparison"><div class="evidence"><div class="evidence-title">01 / TÀI LIỆU §3.3</div><div class="evidence-body">“Vì là căn bậc hai, độ lệch chuẩn luôn nhỏ hơn phương sai.”<p class="note">Phát biểu trong giáo trình cần đính chính.</p></div></div><div class="evidence good"><div class="evidence-title">02 / PHẢN BIỆN TOÁN HỌC</div><div class="evidence-body">Nếu phương sai = <b>0.25</b><div class="formula">√0.25 = 0.5 &gt; 0.25</div>Độ lệch chuẩn lớn hơn về trị số trong ví dụ này.<p class="note">Hai đại lượng khác đơn vị, không so sánh trực tiếp.</p></div></div></div><p>Vì vậy, câu “luôn nhỏ hơn” <b>không đúng trong mọi trường hợp</b>. Mình không có quyền tự sửa giáo trình thay giảng viên. Bạn có thể gửi nghi vấn này để được xác nhận chính thức.</p><div class="actions"><button class="btn warn" onclick="openTicket()"><span class="point">[Điểm 3]</span>📩 Gửi câu hỏi báo lỗi cho TA/Giảng viên</button><button class="btn" onclick="setScenario(\'KB4\')">Đã hiểu, tiếp tục học →</button></div><p class="note">TA trực 08:00–22:00 · Phản hồi từ 08:00 sáng mai.<br>Chưa xác nhận gửi? Câu hỏi vẫn là nháp cá nhân trong phiên này.</p>';
+if(key==='KB1')return '<span class="point" title="HAX G10 · Thu hẹp phạm vi">[Điểm 4]</span><div class="status"><b>📌 Bài tập 3 đang mở nộp (Hạn: 23:59 hôm nay)</b><br>Chính sách: Chỉ gợi ý tư duy, KHÔNG cung cấp/xác nhận đáp số.</div><p>Mình không thể chốt hoặc xác nhận đáp án để bạn nộp Bài 3. Nhưng mình có thể cùng bạn tìm cách lập luận.</p><p style="margin-top:10px">Hãy nhìn lại dãy lương ở <b>§3.5</b>:</p><div class="numbers">'+[9,10,10,11,12,12,13,45].map(n=>'<span class="number">'+n+'</span>').join('')+'</div><p>Đối chiếu <button class="link" onclick="showReference()">§3.4 Giá trị ngoại lai ↗</button>: con số <b>45</b> có gì khác biệt so với phần lớn dãy?</p><div class="actions"><button class="btn primary" onclick="nextHint()" '+(state.steps>=2?'disabled':'')+'>💡 '+(state.steps===0?'Gợi ý bước 1: Tìm ngoại lai':state.steps===1?'Gợi ý bước 2: Tự đối chiếu':'Đã xem đủ 2 bước')+'</button><button class="btn" onclick="focusExplanation()">✍️ Tôi muốn tự giải thích lại</button><button class="btn" onclick="openTicket()">❓ Gửi câu hỏi cho TA</button></div><p class="note"><span class="pill red">Còn 14 phút · Hạn 23:59</span> TA trực 08:00–22:00, tiếp nhận từ 08:00 sáng mai, sau hạn nộp. Bạn chủ động nộp phần đã làm đúng hạn nhé.</p>';
+return '<span class="pill green" style="margin-bottom:12px">✓ Tự làm · Tra cứu tài liệu</span><p>Hai chỉ số đều mô tả vị trí trung tâm, nhưng dùng thông tin khác nhau:</p><div class="comparison"><div class="evidence good"><div class="evidence-title">§3.1 / TRUNG BÌNH</div><div class="evidence-body"><b>Tổng các giá trị ÷ số phần tử.</b><br>Dùng toàn bộ giá trị trong dãy, nên chịu ảnh hưởng của ngoại lai.</div></div><div class="evidence good"><div class="evidence-title">§3.2 / TRUNG VỊ</div><div class="evidence-body"><b>Vị trí giữa dãy đã sắp xếp.</b><br>Với số phần tử chẵn, lấy trung bình hai giá trị ở giữa. Ít chịu ảnh hưởng của ngoại lai.</div></div></div><p>Theo §3.2, trung vị thường phù hợp khi dữ liệu lệch như thu nhập hay giá nhà. Việc chọn chỉ số cần dựa vào mục tiêu mô tả và đặc điểm dữ liệu.</p><div class="extra"><b>Thử tự giải thích:</b> Nếu chỉ giá trị lớn nhất tăng mạnh, tổng của dãy và các vị trí ở giữa thay đổi như thế nào?</div><div class="actions"><button class="btn primary" onclick="focusExplanation()">✍️ Tôi thử giải thích</button><button class="btn" onclick="openTicket()">Hỏi thêm TA</button></div><p class="note">Nguồn: §3.1 & §3.2 · Trả lời ngay, không cần chờ duyệt.<br>TA trực 08:00–22:00, tiếp nhận từ 08:00 sáng mai.</p>';
+}
+function renderChat(){
+const key=state.scenario;
+$('chat').innerHTML='<div class="date">PHIÊN TỰ HỌC TỐI MUỘN · 23:45</div><div class="user-label">Bạn · 23:45</div><div class="user">'+esc(questions[key])+'</div><div class="sender"><span class="ai"><svg fill="none" stroke="currentColor" stroke-width="1.6"><use href="#spark"/></svg></span>Trợ lý học tập AI <span class="pill blue">Study Mode</span></div><div class="response">'+baseResponse(key)+'</div><div aria-live="polite">'+state.messages[key].map(m=>'<div class="extra '+(m.role==='user'?'user-extra':'')+'"><b>'+(m.role==='user'?'Bạn':'Trợ lý AI')+'</b><br>'+esc(m.text)+'</div>').join('')+'</div>';
+$('question').value=state.drafts[key];
+}
+function setScenario(key){if(!Object.hasOwn(questions,key))return;state.drafts[state.scenario]=$('question').value;state.scenario=key;closeModal();clearUndo();document.querySelectorAll('[data-case]').forEach(b=>{b.classList.toggle('active',b.dataset.case===key);b.setAttribute('aria-pressed',String(b.dataset.case===key));});renderChat();switchTab('student');}
+function switchTab(tab){if(!['student','ta'].includes(tab))return;state.tab=tab;closeModal();$('studentView').hidden=tab!=='student';$('taView').hidden=tab!=='ta';for(const [id,active] of [['tabStudent',tab==='student'],['tabTA',tab==='ta'],['sideStudent',tab==='student'],['sideTA',tab==='ta']]){$(id).classList.toggle('active',active);if(id.startsWith('tab'))$(id).setAttribute('aria-selected',String(active));}if(tab==='ta')renderDashboard();}
+function addMessage(text,role='ai'){state.messages[state.scenario].push({id:++state.sequence,text,role});renderChat();}
+function focusExplanation(){$('question').focus();$('question').scrollIntoView({block:'nearest',behavior:'smooth'});$('question').placeholder='Theo mình, giá trị ngoại lai ảnh hưởng đến…';}
+function nextHint(){if(state.scenario!=='KB1'||state.steps>=2)return;const previous=state.steps++;addMessage(hints[previous]);const id=state.messages.KB1.at(-1).id;notify('Đã thêm gợi ý. Có thể hoàn tác trong 10 giây.',()=>{state.messages.KB1=state.messages.KB1.filter(m=>m.id!==id);state.steps=previous;renderChat();});}
+function showReference(){openModal('§3.4 · Giá trị ngoại lai','<p>Giá trị ngoại lai là giá trị khác biệt rõ so với phần lớn dữ liệu, có thể kéo lệch trung bình.</p><blockquote>Đối chiếu dãy ở §3.5: tự mô tả khoảng tập trung của các giá trị và vị trí của 45 so với nhóm còn lại.</blockquote><p>Đây là diễn giải khái niệm để bạn tự suy luận, không xác nhận đáp án Bài 3.</p>','Đã hiểu',closeModal);}
+function clearUndo(){clearTimeout(toastTimer);undo=null;$('toast').hidden=true;$('undoButton').hidden=true;}
+function notify(text,action=null){clearUndo();$('toastText').textContent=text;$('toast').hidden=false;undo=action;$('undoButton').hidden=!action;toastTimer=setTimeout(clearUndo,10000);}
+$('undoButton').onclick=()=>{const action=undo;clearUndo();if(action)action();};
+function openModal(title,body,label,action){returnFocus=document.activeElement;pendingAction=action;$('modalTitle').textContent=title;$('modalBody').innerHTML=body;$('modalConfirm').textContent=label;$('modalOverlay').hidden=false;$('modalConfirm').focus();}
+function closeModal(){if($('modalOverlay').hidden)return;$('modalOverlay').hidden=true;pendingAction=null;if(returnFocus?.isConnected)returnFocus.focus();}
+$('modalConfirm').onclick=()=>{if(pendingAction)pendingAction();};
+$('modalOverlay').addEventListener('click',e=>{if(e.target===$('modalOverlay'))closeModal();});
+document.addEventListener('keydown',e=>{if($('modalOverlay').hidden)return;if(e.key==='Escape'){e.preventDefault();closeModal();}if(e.key==='Tab'){const nodes=[...$('modalOverlay').querySelectorAll('button:not([disabled]),input:not([disabled]),textarea:not([disabled])')];const first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});
+function openTicket(){
+const key=state.scenario;if(state.tickets.some(t=>t.key===key)){notify('Ca này đã có ticket. Xem trạng thái ở Dashboard TA.');switchTab('ta');return;}
+const context=key==='KB2'?'[Nghi vấn lỗi tài liệu §3.3] Phát biểu “độ lệch chuẩn luôn nhỏ hơn phương sai” mâu thuẫn với √0.25 = 0.5 > 0.25.':key==='KB1'?'Cần gợi ý phương pháp Bài 3; không yêu cầu cung cấp hoặc xác nhận đáp số.':'Cần giải thích thêm trung bình và trung vị theo §3.1–§3.2.';
+const extra=state.messages[key].filter(m=>m.role==='user').at(-1)?.text||'';
+openModal('Xác nhận gửi ticket cho TA','<span class="point">[Điểm 3]</span><span class="pill amber">Học viên duyệt gửi</span><blockquote><b>Nội dung thắc mắc</b><br>'+esc(context)+'<br><b>Nguồn:</b> '+esc(sources[key])+(extra?'<br><b>Lập luận bổ sung:</b> '+esc(extra):'')+'</blockquote><div class="callout">Hiện tại là <b>23:45 (ngoài giờ trực)</b>. TA sẽ phản hồi câu hỏi này từ <b>08:00 sáng mai</b>.<br>Khung giờ trực: <b>08:00–22:00</b>.'+(key==='KB1'?'<br><b>Đã sau hạn nộp 23:59; gửi ticket không gia hạn bài.</b>':'')+'</div><p class="mini">Hàng đợi mô phỏng trong prototype, không gửi thông báo đến người thật.</p>','Xác nhận gửi ticket',()=>{if(!state.tickets.some(t=>t.key===key))state.tickets.push({id:'TK-'+String(++state.sequence).padStart(3,'0'),key,context,extra,status:'pending'});updateCount();closeModal();notify('Đã lưu ticket vào hàng đợi TA · Tiếp nhận từ 08:00 sáng mai.');});
+}
+function now(){return Date.now()+state.offset;}
+function expireFAQs(){for(const f of state.faqs)if(f.status==='pending'&&f.expires<=now())f.status='expired';}
+function updateCount(){expireFAQs();$('queueCount').textContent=state.tickets.filter(t=>t.status==='pending').length+state.faqs.filter(f=>f.status==='pending').length;}
+function proposeFAQ(){
+const key=state.scenario;expireFAQs();
+if(key==='KB1'){openModal('Bài đang mở · Không đưa bài giải lên FAQ','<span class="point">[Điểm 5]</span><div class="callout">Bài 3 đang mở đến 23:59. Đề xuất chứa câu hỏi lựa chọn đáp án có thể làm lộ bài giải, nên không đưa vào hàng chờ FAQ.</div><p>Bạn có thể chuyển sang Ca 3 để đề xuất câu hỏi khái niệm chung.</p>','Học khái niệm ở Ca 3',()=>setScenario('KB4'));return;}
+if(state.faqs.some(f=>f.key===key&&['pending','approved'].includes(f.status))){notify('Đã có đề xuất cho ca này. Xem trạng thái tại Dashboard TA.');return;}
+const question=key==='KB2'?'Độ lệch chuẩn có luôn nhỏ hơn phương sai không?':'Trung bình và trung vị khác nhau như thế nào?';
+const answer=key==='KB2'?'Không luôn đúng: phương sai 0.25 thì độ lệch chuẩn √0.25 = 0.5 > 0.25. Hai đại lượng khác đơn vị nên không so sánh trực tiếp. Cần đính chính phát biểu tại §3.3.':'Theo §3.1, trung bình bằng tổng chia số phần tử và chịu ảnh hưởng ngoại lai. Theo §3.2, trung vị dùng vị trí giữa dãy đã sắp xếp, ít chịu ảnh hưởng ngoại lai; với dãy chẵn lấy trung bình hai giá trị giữa.';
+openModal('Đề xuất FAQ · Chưa công khai','<span class="point">[Điểm 5]</span><span class="pill amber">Cần TA/Giảng viên duyệt</span><blockquote><b>'+esc(question)+'</b><br>'+esc(answer)+'<br><b>Nguồn:</b> '+esc(sources[key])+'</blockquote><div class="callout">'+(key==='KB2'?'⚠️ Độ chắc thấp · Cần đối chiếu và xác nhận đính chính.':'Bám tài liệu · Chờ TA kiểm chứng.')+'<br>TA trực 08:00–22:00, tiếp nhận từ 08:00 sáng mai. Chưa duyệt sau 24 giờ: nháp tự ẩn, không công khai.</div>','Gửi đề xuất chờ duyệt',()=>{if(!state.faqs.some(f=>f.key===key&&['pending','approved'].includes(f.status)))state.faqs.push({id:'FAQ-'+String(++state.sequence).padStart(3,'0'),key,question,answer,status:'pending',expires:now()+86400000});closeModal();updateCount();notify('Đã gửi đề xuất FAQ. Chỉ TA/Giảng viên có quyền duyệt đăng.');});
+}
+function renderDashboard(){
+updateCount();const waiting=state.tickets.filter(t=>t.status==='pending').length,pending=state.faqs.filter(f=>f.status==='pending'),published=state.faqs.filter(f=>f.status==='approved');
+$('taView').innerHTML='<div class="caption" style="color:#7290bd">Không gian giảng dạy</div><h2 style="font-size:21px;margin-top:8px">Tiếp nhận, kiểm chứng, rồi chia sẻ.</h2><p class="mini" style="margin-top:8px">TA trực 08:00–22:00 · Hiện đang ngoại tuyến. Các thao tác bên dưới mô phỏng TA xử lý khi ca trực bắt đầu; không phải phản hồi thật trong đêm.</p><div class="stats"><div class="stat"><span class="mini">Ticket chờ</span><strong>'+waiting+'</strong><span class="pill blue">Từ học viên</span></div><div class="stat"><span class="mini">FAQ chờ duyệt</span><strong>'+pending.length+'</strong><span class="pill amber">Chưa công khai</span></div><div class="stat"><span class="mini">FAQ đã duyệt</span><strong>'+published.length+'</strong><span class="pill green">Bảng tin mô phỏng</span></div></div><h2>Hàng đợi ticket</h2>'+
+(state.tickets.length?state.tickets.map(t=>'<article class="ticket"><div class="meta"><span class="pill '+(t.key==='KB2'?'amber':'blue')+'">'+(t.key==='KB2'?'⚠ Nghi vấn lỗi tài liệu':'Câu hỏi học tập')+'</span><span class="mini">'+t.id+' · 23:45</span></div><h3>'+esc(t.context)+'</h3><p class="mini">Nguồn: '+esc(sources[t.key])+(t.extra?'<br>Lập luận học viên: '+esc(t.extra):'')+'</p><div class="actions">'+(t.status==='pending'?'<button class="btn" onclick="resolveTicket(\''+t.id+'\')">Mô phỏng TA tiếp nhận lúc 08:00</button>':'<span class="pill green">✓ TA đã tiếp nhận · Chờ giải đáp</span>')+'</div></article>').join(''):'<div class="empty">Chưa có ticket nào.<br>Chọn Ca 1 → Gửi câu hỏi báo lỗi → Xác nhận gửi ticket.</div>')+
+'<div class="section-head"><h2>Đề xuất FAQ cần kiểm chứng</h2><span class="point">[Điểm 5]</span></div>'+
+(pending.length?pending.map(f=>'<article class="ticket"><div class="meta"><span class="pill amber">'+(f.key==='KB2'?'Độ chắc thấp · Cần đối chiếu':'Cần người duyệt')+'</span><span class="mini">'+f.id+'</span></div><h3>'+esc(f.question)+'</h3><p>'+esc(f.answer)+'</p><p class="note">Nguồn: '+esc(sources[f.key])+' · Chưa công khai</p><div class="actions"><button class="btn primary" onclick="reviewFAQ(\''+f.id+'\')">Kiểm chứng & duyệt</button><button class="btn danger" onclick="rejectFAQ(\''+f.id+'\')">Từ chối đề xuất</button></div></article>').join(''):'<div class="empty">Không có FAQ đang chờ. AI không tự tạo bài đăng.</div>')+
+'<div class="actions"><button class="btn" onclick="simulateExpiry()">Thử quy tắc: +24 giờ chưa duyệt</button></div><p class="note">'+state.faqs.filter(f=>f.status==='expired').length+' nháp tự ẩn do quá hạn · '+state.faqs.filter(f=>f.status==='rejected').length+' đề xuất bị từ chối. Thử thời gian chỉ áp dụng cho FAQ, không đổi hạn nộp bài.</p><div class="section-head"><h2>FAQ lớp · Bản mô phỏng đã duyệt</h2></div>'+
+(published.length?published.map(f=>'<article class="published"><h3 style="font-size:13px;font-weight:650;margin-bottom:7px">'+esc(f.question)+'</h3><p>'+esc(f.answer)+'</p><p class="note">✓ TA/Giảng viên đã kiểm chứng · '+esc(sources[f.key])+'</p></article>').join(''):'<p class="mini" style="margin-top:12px">Chưa có nội dung công khai. Mọi đề xuất cần được TA duyệt trước.</p>');
+}
+function resolveTicket(id){const t=state.tickets.find(t=>t.id===id);if(state.tab!=='ta'||!t||t.status!=='pending')return;t.status='received';renderDashboard();notify('Mô phỏng: TA tiếp nhận đầu ca 08:00. Chưa tự tạo câu trả lời.');}
+function reviewFAQ(id){
+expireFAQs();const f=state.faqs.find(f=>f.id===id);if(state.tab!=='ta'||!f||f.status!=='pending')return;
+openModal('TA/Giảng viên · Kiểm chứng trước khi đăng','<p><b>'+esc(f.question)+'</b></p><p class="mini">Nguồn: '+esc(sources[f.key])+'</p><label for="faqAnswer">Nội dung đã kiểm chứng</label><textarea id="faqAnswer" rows="5" maxlength="2500">'+esc(f.answer)+'</textarea><label style="display:flex;gap:8px;align-items:flex-start"><input id="verifyFAQ" type="checkbox" style="margin-top:5px"><span>Tôi đang đóng vai TA/Giảng viên, đã đối chiếu nguồn'+(f.key==='KB2'?', kiểm chứng phản ví dụ và xác nhận nội dung đính chính':'')+'; nội dung không chứa lời giải Bài 3 đang mở.</span></label><p id="reviewError" class="note" style="color:#b54b4b" role="alert"></p>','Duyệt FAQ (mô phỏng)',()=>{
+expireFAQs();if(f.status!=='pending'){closeModal();renderDashboard();notify('Nháp quá hạn, không thể duyệt.');return;}
+const answer=$('faqAnswer').value.trim();if(!$('verifyFAQ').checked||!answer){$('reviewError').textContent='Hãy kiểm chứng, điền nội dung và đánh dấu xác nhận trước khi duyệt.';return;}
+if(/\b(?:11[.,]5|15[.,]25)\b/.test(answer)){$('reviewError').textContent='Không đăng đáp số bài đang mở. Chỉ giữ nội dung khái niệm.';return;}
+f.answer=answer;f.status='approved';closeModal();renderDashboard();notify('FAQ đã được TA duyệt trên bảng tin mô phỏng.');});
+}
+function rejectFAQ(id){const f=state.faqs.find(f=>f.id===id);if(state.tab!=='ta'||!f||f.status!=='pending')return;openModal('Từ chối đề xuất FAQ','<p>Đề xuất sẽ không xuất hiện trên FAQ lớp. Học viên có thể gửi lại đề xuất để được kiểm chứng.</p>','Xác nhận từ chối',()=>{f.status='rejected';closeModal();renderDashboard();notify('Đã từ chối. Nội dung không được công khai.');});}
+function simulateExpiry(){if(state.tab!=='ta')return;state.offset+=86400001;renderDashboard();notify('Đã mô phỏng +24 giờ: nháp chưa duyệt đã tự ẩn.');}
+function replyTo(text,key){
+const q=text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').toLowerCase();
+if(/gia han/.test(q))return 'Mình không có quyền gia hạn bài. Hạn Bài 3 vẫn là 23:59 ngày 13/11/2026. Hãy nộp phần đã làm; bạn có thể gửi yêu cầu cho TA/Giảng viên (08:00–22:00, tiếp nhận từ 08:00 sáng mai).';
+if(/p.?value|python|buoi (?:[4-9]|10)/.test(q))return 'Phần này ngoài tài liệu đang mở. Buổi 7 giới thiệu kiểm định giả thuyết và p-value; hiện chưa có nội dung để giảng chi tiết. Khoá học dùng bảng tính, mình không chấm Python. Bạn có thể gửi TA (08:00–22:00, tiếp nhận từ 08:00 sáng mai).';
+if(key==='KB1'||/bai (?:tap )?3|11[.,]5|15[.,]25/.test(q))return 'Mình không xác nhận đáp số hoặc lựa chọn chỉ số cho Bài 3 đang mở. Bạn tự kiểm tra: đã mô tả ngoại lai theo §3.4, phân biệt ảnh hưởng lên tổng và vị trí giữa dãy theo §3.1–§3.2, rồi giải thích tiêu chí “điển hình” bằng lời chưa?';
+if(/slide/.test(q))return 'Tài liệu chia theo §3.1–§3.5, không có slide đánh số để mình trích dẫn. Khái niệm trung vị nằm ở §3.2: sắp xếp dãy, xét vị trí giữa; dãy chẵn dùng hai giá trị giữa.';
+if(key==='KB2')return 'Theo §3.3, câu “luôn nhỏ hơn phương sai” cần đính chính: √0.25 = 0.5 > 0.25. Hai đại lượng khác đơn vị. Độ chắc thấp · Cần đối chiếu nguồn giáo trình; AI không tự sửa tài liệu. Bạn có thể dùng nút gửi TA (08:00–22:00, phản hồi từ 08:00 sáng mai).';
+if(/do lech/.test(q))return 'Bạn đang hỏi về độ lệch chuẩn ở §3.3 hay độ lệch của từng giá trị so với trung bình? Mình cần làm rõ trước khi giải thích tiếp.';
+return 'Để tự đối chiếu lập luận: §3.1 dùng tổng và số phần tử; §3.2 dùng vị trí giữa dãy đã sắp xếp. Khi một giá trị ngoài cùng tăng, hãy xét riêng từng yếu tố. Prototype này gợi ý tự kiểm tra, không tự chấm đúng/sai lời giải của bạn.';
+}
+$('chatForm').addEventListener('submit',e=>{e.preventDefault();const text=$('question').value.trim();if(!text)return;state.drafts[state.scenario]='';addMessage(text,'user');addMessage(replyTo(text,state.scenario));$('question').focus();});
+$('question').addEventListener('input',()=>{state.drafts[state.scenario]=$('question').value;});
+setInterval(()=>{updateCount();if(state.tab==='ta'&&$('modalOverlay').hidden)renderDashboard();},30000);
+renderChat();updateCount();
 </script>
-
 </body>
 </html>
